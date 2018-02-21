@@ -16,16 +16,15 @@ func (e *MyError) Error() string {
 	return fmt.Sprintf("id:%d  description:%s", e.id, e.description)
 }
 
-type t_face interface{
-	Prt()string
-	Check()bool
+type t_face interface {
+	Prt() string
+	Check() bool
 }
 
-type t_face_struct struct{
-
+type t_face_struct struct {
 }
 
-func (s *t_face_struct)Prt()string  {
+func (s *t_face_struct) Prt() string {
 	return fmt.Sprint("return a string")
 }
 
@@ -33,6 +32,8 @@ func (s *t_face_struct) Check() bool {
 	return true
 }
 
-func test_t_interface() t_face {
+func test_t_interface(t t_face) t_face {
+
 	return &t_face_struct{}
+
 }
