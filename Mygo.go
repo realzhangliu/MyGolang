@@ -1,13 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"math/rand"
 	"os"
 	"sync"
 	"time"
-	"encoding/json"
-	"runtime"
 )
 
 func algorithm_start(name string) {
@@ -38,6 +37,11 @@ func MapF(f func(x, y int) int, x1, y1 int) {
 type state_confirm struct {
 	key  int
 	done chan string
+}
+
+func dododo(f func(x, y int)) {
+	fmt.Println("Enter F Func.")
+	f(10,10)
 }
 
 func main() {
@@ -72,7 +76,7 @@ func main() {
 	//for _,v := range list {
 	//	fmt.Println(string(v.Name()))
 	//}
-
+	fmt.Println("End....")
 }
 
 func ProcessJsonContent(f os.FileInfo, sc chan state_confirm, wg *sync.WaitGroup) {
