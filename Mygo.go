@@ -26,6 +26,12 @@ func algorithm_start(name string) {
 
 }
 
+type It3 struct {
+	ID          int32
+	Name        string
+	SpecialName string
+}
+
 func main() {
 	defer func() {
 		fmt.Print("\nFinally!")
@@ -37,5 +43,11 @@ func main() {
 	//for _, v := range list {
 	//	fmt.Println(string(v.Name()))
 	//}
-	algorithm_start("MergeSort")
+
+	//algorithm_start("MergeSort")
+
+	for sum := 0; sum < 100; sum++ {
+		fmt.Printf("Type:%T Value:%v",sum,sum)
+	}
+
 }
