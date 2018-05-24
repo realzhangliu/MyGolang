@@ -12,7 +12,7 @@ func algorithm_start(name string) {
 		a = append(a, rand.Intn(100))
 	}
 	switch name {
-	case "QucikSort":
+	case "QuickSort":
 		QuickSort(a, 0, len(a)-1)
 		fmt.Printf("Sorted array is :%v\n", a)
 
@@ -29,25 +29,30 @@ func algorithm_start(name string) {
 type It3 struct {
 	ID          int32
 	Name        string
-	SpecialName string
+	SpecifiedName string
+	promotedStruct
+}
+type promotedStruct struct{
+	fullname string
+}
+type find interface{
+	findsomething()
+}
+
+func (e *promotedStruct) findsomething() {
+	fmt.Println("find some thing...")
+}
+
+func acceptArguments(f find)  {
+		f.findsomething()
 }
 
 func main() {
 	defer func() {
 		fmt.Print("\nFinally!")
 	}()
-	//ex, _ := os.Executable()
-	//fmt.Println(ex)
-	//dir := filepath.Dir(ex)
-	//list, _ := ioutil.ReadDir(dir)
-	//for _, v := range list {
-	//	fmt.Println(string(v.Name()))
-	//}
-
-	//algorithm_start("MergeSort")
-
-	for sum := 0; sum < 100; sum++ {
-		fmt.Printf("Type:%T Value:%v",sum,sum)
-	}
-
+	var v1 promotedStruct
+	v1.fullname="zzzz"
+	acceptArguments(&v1)
 }
+
