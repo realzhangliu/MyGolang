@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"math/rand"
 )
@@ -37,5 +38,12 @@ func main() {
 	//for _, v := range list {
 	//	fmt.Println(string(v.Name()))
 	//}
-	algorithm_start("MergeSort")
+	//algorithm_start("MergeSort")
+	//PingBaidu()
+	var a1,b1,c1 string
+	flag.StringVar(&a1,"Alpha","Value-A","usage:Value-A")
+	b1=flag.Arg(0)
+	c1=flag.Arg(1)
+	flag.Parse()
+	fmt.Printf("%v  %v  %v  ",flag.Args(),b1,c1)
 }
