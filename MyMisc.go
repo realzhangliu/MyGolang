@@ -39,6 +39,3 @@ func test_t_interface(t t_face) t_face {
 
 }
 
-func assert(i interface{}) {
-	s:=i.(int)
-}
