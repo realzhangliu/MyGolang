@@ -1,9 +1,9 @@
 package main
 
 import (
-	"MyGolang/MyUploadServer"
 	"fmt"
 	"math/rand"
+	"MyGolang/MyUploadServer"
 )
 
 func algorithm_start(name string) {
@@ -32,4 +32,5 @@ func main() {
 		fmt.Print("\nFinally!")
 	}()
 	MyUploadServer.Start()
+
 }

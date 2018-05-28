@@ -11,15 +11,31 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/alecthomas/template"
+	"html/template"
+	"path/filepath"
 )
 
+var projectPath string
+
 func Start() {
-	fmt.Println(os.Args[0])
+	//fmt.Println(os.Args[0])
+	//Path for assets
+	var err error
+	projectPath,err=os.Getwd()
+	if err!=nil{
+		log.Println(err)
+	}
+	projectPath=filepath.ToSlash(projectPath)+"/src/MyGolang/MyUploadServer"
+	fmt.Println(projectPath)
+
+
 	http.HandleFunc("/", syahelloName)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/upload", uploadHandler)
 	http.ListenAndServe(":9090", nil)
+	//http.ListenAndServe(":9090", http.FileServer(http.Dir(".")))
+
+
 }
 func syahelloName(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
@@ -45,7 +61,7 @@ func uploadHandler(writer http.ResponseWriter, r *http.Request) {
 			file, err := value.Open()
 			CheckHttpErrors(err, writer)
 			defer file.Close()
-			dst, err2 := os.Create("./upload/" + strconv.Itoa(time.Now().Second()) + value.Filename)
+			dst, err2 := os.Create(projectPath+"/upload/" + strconv.Itoa(time.Now().Second()) + value.Filename)
 			defer dst.Close()
 			CheckHttpErrors(err2, writer)
 			_, err3 := io.Copy(dst, file)
@@ -55,7 +71,7 @@ func uploadHandler(writer http.ResponseWriter, r *http.Request) {
 			}
 		}
 	case "GET":
-		t, err := template.ParseFiles("./MyGolang/MyUploadServer/uploadfiles.html")
+		t, err := template.ParseFiles(projectPath+"/uploadfiles.html")
 		CheckHttpErrors(err, writer)
 		t.Execute(writer, nil)
 
@@ -72,7 +88,7 @@ func CheckHttpErrors(e error, writer http.ResponseWriter) {
 func login(writer http.ResponseWriter, r *http.Request) {
 	log.Println(r.Method)
 	if r.Method == "GET" {
-		t, _ := template.ParseFiles("./MyGolang/MyUploadServer/login.html")
+		t, _ := template.ParseFiles(projectPath+"/login.html")
 		log.Println(t.Execute(writer, nil))
 	} else {
 		r.ParseForm()
