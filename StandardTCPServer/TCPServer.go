@@ -1,11 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"net"
 	"os"
-	"bufio"
 )
 
 func Checkerr(e error) {
@@ -36,13 +36,13 @@ func handleConnection(conn net.Conn) {
 	remoteAddr := conn.RemoteAddr().String()
 	fmt.Println("remote client from" + remoteAddr)
 
+	reader := bufio.NewReader(conn)
 	for {
-		reader := bufio.NewReader(conn)
 		data, err3 := reader.ReadString('\n')
 		if err3 != nil {
 			break
 		}
-		log.Printf("0 -> %s",data)
+		log.Printf("%v -> %s", conn.RemoteAddr(), data)
 	}
 	//for {
 	//	message := make([]byte, 1024)

@@ -28,7 +28,6 @@ func Start() {
 	projectPath=filepath.ToSlash(projectPath)+"/src/MyGolang/MyUploadServer"
 	fmt.Println(projectPath)
 
-
 	http.HandleFunc("/", syahelloName)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/upload", uploadHandler)

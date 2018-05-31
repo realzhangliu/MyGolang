@@ -28,7 +28,7 @@ func main() {
 		text, _ := reader.ReadString('\n')
 		//tcpconn.SetWriteDeadline(time.Now().Add(1 * time.Second))
 		_, err := tcpconn.Write([]byte(text))
-		if text=="q\n"{
+		if text == "q\n" {
 			os.Exit(0)
 		}
 		if err != nil {
