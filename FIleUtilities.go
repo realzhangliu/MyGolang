@@ -1,23 +1,23 @@
 package main
 
 import (
-	"os"
 	"fmt"
+	"os"
 )
 
 const (
-	path     = "D:/MyGO/temp"
-	temp_txt = "temp_txt.txt"
-	temp_doc = "temp_doc.doc"
+	path    = "D:/MyGO/temp"
+	tempTxt = "temp_txt.txt"
+	tempDoc = "temp_doc.doc"
 )
 
-func check_panic(e error) {
+func checkPanic(e error) {
 	if e != nil {
 		panic(e)
 	}
 }
 
-func checkFileIsExist(filename string, debug_symbol bool) bool {
+func checkFileIsExist(filename string, debugSymbol bool) bool {
 	exist := true
 	if info, err := os.Stat(filename); os.IsNotExist(err) {
 		exist = false
@@ -28,23 +28,22 @@ func checkFileIsExist(filename string, debug_symbol bool) bool {
 }
 
 func readFile(filename string) {
-	fullFilename := path + "/" + temp_txt
+	fullFilename := path + "/" + tempTxt
 	if checkFileIsExist(fullFilename, true) {
 		f, err := os.Open(fullFilename)
-		check_panic(err)
+		checkPanic(err)
 		defer f.Close()
 
-		dat := make([]byte,5)
+		dat := make([]byte, 5)
 
-		for{
-			if _,err:=f.Read(dat);err!=nil{
+		for {
+			if _, err := f.Read(dat); err != nil {
 				break
-			}else {
+			} else {
 				fmt.Print(string(dat))
 
 			}
 		}
-
 
 	}
 }

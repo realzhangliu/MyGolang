@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"io"
 	"math/rand"
-	"MyUploadServer"
+
+	"github.com/netldds/MyGolang/Matrix"
+	"github.com/netldds/MyGolang/MyUploadServer"
 )
 
-func algorithm_start(name string) {
+func algorithmStart(name string) {
 
 	var a []int
 	for i := 0; i < 100; i++ {
@@ -38,5 +40,6 @@ func main() {
 	h := md5.New()
 	io.WriteString(h, "hello")
 	fmt.Printf("%x", h.Sum(nil))
-	// var mt Matrix.Matrix
+	var mt Matrix.Matrix
+	fmt.Println(mt)
 }

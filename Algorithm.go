@@ -1,6 +1,7 @@
 package main
 
 var a chan string
+
 func MergeSort(a []int, low, high int) {
 	if low < high {
 		mid := (low + high) / 2
@@ -11,7 +12,7 @@ func MergeSort(a []int, low, high int) {
 }
 func merge(a []int, low int, mid int, high int) {
 	N := high - low + 1
-	var b []int =make([]int,N)
+	var b = make([]int, N)
 	left := low
 	right := mid + 1
 	bIndex := 0
@@ -59,6 +60,6 @@ func partition(a []int, low int, high int) int {
 			a[k], a[m] = a[m], a[k]
 		}
 	}
-	a[low],a[m]=a[m],a[low]
+	a[low], a[m] = a[m], a[low]
 	return m
 }
