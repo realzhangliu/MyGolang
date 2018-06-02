@@ -7,6 +7,7 @@ type Matrix struct {
 
 type Error struct {
 	content string
+	err     error
 }
 
 //Multiply for matrix

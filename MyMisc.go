@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/netldds/MyGolang/Matrix"
+)
 
 type MyError struct {
 	id          int
@@ -37,4 +41,19 @@ func testTinterface(t tFace) tFace {
 
 	return &tFaceStruct{}
 
+}
+
+func RunMatrixMutiply() {
+	mt := [][]float32{
+		[]float32{1, 2, 3},
+		[]float32{4, 5, 6},
+		[]float32{7, 8, 9}}
+	mv := [][]float32{
+		{1, 2},
+		{1, 2},
+		{1, 2}}
+	mt1, _ := matrix.New(mt)
+	mt2, _ := matrix.New(mv)
+	result, _ := mt1.Multiply(mt2)
+	fmt.Println(result)
 }

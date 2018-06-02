@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"math/rand"
-
-	"github.com/netldds/MyGolang/Matrix"
 )
 
 func algorithmStart(name string) {
@@ -33,16 +31,5 @@ func main() {
 		fmt.Print("\nFinally!")
 	}()
 	// MyUploadServer.Start()
-	mt := [][]float32{
-		[]float32{1, 2, 3},
-		[]float32{4, 5, 6},
-		[]float32{7, 8, 9}}
-	mv := [][]float32{
-		{1, 2},
-		{1, 2},
-		{1, 2}}
-	mt1, _ := matrix.New(mt)
-	mt2, _ := matrix.New(mv)
-	result, _ := mt1.Multiply(mt2)
-	fmt.Println(result)
+	//RunMatrixMutiply()
 }
