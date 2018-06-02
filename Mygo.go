@@ -1,13 +1,10 @@
 package main
 
 import (
-	"crypto/md5"
 	"fmt"
-	"io"
 	"math/rand"
 
 	"github.com/netldds/MyGolang/Matrix"
-	"github.com/netldds/MyGolang/MyUploadServer"
 )
 
 func algorithmStart(name string) {
@@ -35,11 +32,17 @@ func main() {
 	defer func() {
 		fmt.Print("\nFinally!")
 	}()
-	MyUploadServer.Start()
-
-	h := md5.New()
-	io.WriteString(h, "hello")
-	fmt.Printf("%x", h.Sum(nil))
-	var mt Matrix.Matrix
-	fmt.Println(mt)
+	// MyUploadServer.Start()
+	mt := [][]float32{
+		[]float32{1, 2, 3},
+		[]float32{4, 5, 6},
+		[]float32{7, 8, 9}}
+	mv := [][]float32{
+		{1, 2},
+		{1, 2},
+		{1, 2}}
+	mt1, _ := matrix.New(mt)
+	mt2, _ := matrix.New(mv)
+	result, _ := mt1.Multiply(mt2)
+	fmt.Println(result)
 }
