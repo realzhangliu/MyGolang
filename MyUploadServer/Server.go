@@ -13,6 +13,7 @@ import (
 
 	"html/template"
 	"path/filepath"
+	"crypto/md5"
 )
 
 var projectPath string
@@ -25,23 +26,27 @@ func Start() {
 	if err != nil {
 		log.Println(err)
 	}
-	projectPath = filepath.ToSlash(projectPath) + "/src/MyGolang/MyUploadServer"
+	projectPath = filepath.ToSlash(projectPath) + "/src/github.com/netldds/MyGolang/MyUploadServer"
 	fmt.Println(projectPath)
 
 	http.HandleFunc("/", syahelloName)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/upload", uploadHandler)
+	http.HandleFunc("logout", logout)
 	http.ListenAndServe(":9090", nil)
 	fmt.Println("Server listing at: 127.0.0.1:9090")
 	//http.ListenAndServe(":9090", http.FileServer(http.Dir(".")))
 
 }
+func logout(writer http.ResponseWriter, r *http.Request) {
+
+}
 func syahelloName(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	fmt.Println(r.Form)
-	fmt.Println("path", r.URL.Path)
-	fmt.Println("scheme", r.URL.Scheme)
-	fmt.Println(r.Form["url_long"])
+	//fmt.Println(r.Form)
+	//fmt.Println("path", r.URL.Path)
+	//fmt.Println("scheme", r.URL.Scheme)
+	//fmt.Println(r.Form["url_long"])
 	for key, value := range r.Form {
 		fmt.Println("key:", key)
 		fmt.Print("val:", value)
@@ -52,7 +57,7 @@ func syahelloName(w http.ResponseWriter, r *http.Request) {
 func uploadHandler(writer http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "POST":
-		err := r.ParseMultipartForm(10000)
+		err := r.ParseMultipartForm(2 << 21)
 		CheckHttpErrors(err, writer)
 		m := r.MultipartForm
 		files := m.File["uploadfile"]
@@ -60,14 +65,18 @@ func uploadHandler(writer http.ResponseWriter, r *http.Request) {
 			file, err := value.Open()
 			CheckHttpErrors(err, writer)
 			defer file.Close()
-			dst, err2 := os.Create(projectPath + "/upload/" + strconv.Itoa(time.Now().Second()) + value.Filename)
+			md5str:=md5.New()
+			io.WriteString(md5str,strconv.Itoa(time.Now().Second()))
+			fullfilename:=fmt.Sprintf("%s/upload/%x%s",projectPath,md5str.Sum(nil),value.Filename)
+			//dst, err2 := os.Create(projectPath + "/upload/" +  + value.Filename)
+			dst, err2 := os.Create(fullfilename)
 			defer dst.Close()
 			CheckHttpErrors(err2, writer)
 			_, err3 := io.Copy(dst, file)
 			CheckHttpErrors(err3, writer)
-			for i := 0; i < 3; i++ {
-				fmt.Fprintf(writer, "processing %d ...%s", i, value.Filename)
-			}
+
+			fmt.Fprintf(writer, "upload success.")
+
 		}
 	case "GET":
 		t, err := template.ParseFiles(projectPath + "/uploadfiles.html")

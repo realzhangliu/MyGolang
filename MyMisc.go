@@ -55,5 +55,5 @@ func RunMatrixMutiply() {
 	mt1, _ := matrix.New(mt)
 	mt2, _ := matrix.New(mv)
 	result, _ := mt1.Multiply(mt2)
-	fmt.Println(result)
+	fmt.Println(*result)
 }
