@@ -14,3 +14,4 @@
 .glide/
 debug
 MyUploadServer/upload/
+StandardTCPClient/t.dat
