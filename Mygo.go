@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"github.com/netldds/MyGolang/MyUploadServer"
 )
 
 func algorithmStart(name string) {
@@ -31,7 +30,7 @@ func main() {
 	defer func() {
 		fmt.Print("\nFinally!")
 	}()
-	RunMatrixMutiply()
-	MyUploadServer.Start()
-
+	//RunMatrixMutiply()
+	//MyUploadServer.Start()
+	go func() {}()
 }
