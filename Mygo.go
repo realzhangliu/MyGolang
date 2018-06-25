@@ -32,6 +32,10 @@ func main() {
 	defer func() {
 		fmt.Print("\nFinally!")
 	}()
+	b:=[]int{1,2,3,4,5}
+	for v:=range b{
+		fmt.Println(v)
+	}
 	RunMatrixMutiply()
 	MyUploadServer.Start()
 

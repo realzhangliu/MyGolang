@@ -14,7 +14,7 @@ func main() {
 	fmt.Println(os.Getwd())
 	target_url := "http://127.0.0.1:9090/upload"
 	filename := "t.dat"
-	postFile(filename, target_url)
+	fmt.Println(postFile(filename, target_url))
 }
 func postFile(filename string, target_url string) error {
 	bodyBuf := &bytes.Buffer{}
