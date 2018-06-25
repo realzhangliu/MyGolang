@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-
+	//仅仅是为了调用init()函数，所以无法通过包名来调用包中的其他函数
 	_ "github.com/go-sql-driver/mysql"
 )
 
