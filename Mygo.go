@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"math/rand"
+
+	"github.com/netldds/MyGolang/DataBaseOperation"
+	_ "github.com/netldds/MyGolang/Hash"
 )
 
 func algorithmStart(name string) {
@@ -26,11 +29,6 @@ func algorithmStart(name string) {
 
 }
 
-func checkerr(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
 func main() {
 	defer func() {
 		fmt.Print("\nFinally!")
@@ -38,6 +36,5 @@ func main() {
 	//RunMatrixMutiply()
 	//MyUploadServer.Start()
 	//Hash.NewHash()
-	//DataBaseOperation.Man()
-	createQuery(nil)
+	DataBaseOperation.Man()
 }
