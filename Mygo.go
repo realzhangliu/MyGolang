@@ -36,5 +36,6 @@ func main() {
 	//RunMatrixMutiply()
 	//MyUploadServer.Start()
 	//Hash.NewHash()
-	DataBaseOperation.Man()
+	//DataBaseOperation.MysqlExample()
+	DataBaseOperation.Sqllite3Example()
 }
