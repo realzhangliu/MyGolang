@@ -26,7 +26,7 @@ func Start() {
 	if err != nil {
 		log.Println(err)
 	}
-	projectPath = filepath.ToSlash(projectPath) + "/src/github.com/netldds/MyGolang/MyUploadServer"
+	projectPath = filepath.ToSlash(projectPath) + "/github.com/netldds/MyGolang/MyUploadServer"
 	fmt.Println(projectPath)
 
 	http.HandleFunc("/", syahelloName)
@@ -51,7 +51,11 @@ func syahelloName(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("key:", key)
 		fmt.Print("val:", value)
 	}
-	fmt.Fprintf(w, "Hello wangwang!")
+	for _,v:=range r.Cookies(){
+		fmt.Fprintf(w, "cookies:%v",v)
+	}
+	fmt.Fprintf(w,"%s","123")
+	//http.Redirect(w,r,"http://www.baidu.com",http.StatusFound)
 }
 
 func uploadHandler(writer http.ResponseWriter, r *http.Request) {
