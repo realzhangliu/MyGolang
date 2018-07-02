@@ -14,6 +14,7 @@ import (
 	"html/template"
 	"path/filepath"
 	"crypto/md5"
+	"net/url"
 )
 
 var projectPath string
@@ -33,8 +34,8 @@ func Start() {
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/upload", uploadHandler)
 	http.HandleFunc("logout", logout)
-	http.ListenAndServe(":9090", nil)
-	fmt.Println("Server listing at: 127.0.0.1:9090")
+	http.ListenAndServe(":80", nil)
+	fmt.Println("Server listing at: 127.0.0.1:80")
 	//http.ListenAndServe(":9090", http.FileServer(http.Dir(".")))
 
 }
@@ -52,9 +53,12 @@ func syahelloName(w http.ResponseWriter, r *http.Request) {
 		fmt.Print("val:", value)
 	}
 	for _,v:=range r.Cookies(){
-		fmt.Fprintf(w, "cookies:%v",v)
+		fmt.Fprintf(w, "cookies:%v\n",v)
 	}
-	fmt.Fprintf(w,"%s","123")
+	cookie:=http.Cookie{Name:"MyCookieName",Value:url.QueryEscape("Value"),Path:"/",HttpOnly:true,MaxAge:3600}
+	//发送COOKIE给客户端
+	http.SetCookie(w,&cookie)
+	fmt.Fprintf(w,"%s","Initialization.")
 	//http.Redirect(w,r,"http://www.baidu.com",http.StatusFound)
 }
 
