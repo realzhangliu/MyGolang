@@ -54,8 +54,11 @@ func syahelloName(w http.ResponseWriter, r *http.Request) {
 	}
 	for _,v:=range r.Cookies(){
 		fmt.Fprintf(w, "cookies:%v\n",v)
+		fmt.Println(v)
 	}
-	cookie:=http.Cookie{Name:"MyCookieName",Value:url.QueryEscape("Value"),Path:"/",HttpOnly:true,MaxAge:3600}
+	//MaxAge是秒单位
+	//Name是服务器指定的固定名字，Value是分每个客户端分配的唯一标识
+	cookie:=http.Cookie{Name:"MyCookieName",Value:url.QueryEscape("ValueAsSID"),Path:"/",HttpOnly:true,MaxAge:3600}
 	//发送COOKIE给客户端
 	http.SetCookie(w,&cookie)
 	fmt.Fprintf(w,"%s","Initialization.")

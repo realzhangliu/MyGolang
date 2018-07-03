@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"math/rand"
 
-	"container/list"
-
 	_ "github.com/netldds/MyGolang/Hash"
 )
 
@@ -39,4 +37,5 @@ func main() {
 	//Hash.NewHash()
 	//DataBaseOperation.MysqlExample()
 	//DataBaseOperation.Sqllite3Example()
+
 }
