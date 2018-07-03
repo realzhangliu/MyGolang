@@ -14,5 +14,5 @@ func NewHash() {
 }
 
 func init() {
-	fmt.Println("Initialization...")
+	fmt.Println(" Hash Init Func Initialization...")
 }

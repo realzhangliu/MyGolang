@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 
-	"time"
+	"container/list"
 
 	_ "github.com/netldds/MyGolang/Hash"
 )
@@ -39,18 +39,4 @@ func main() {
 	//Hash.NewHash()
 	//DataBaseOperation.MysqlExample()
 	//DataBaseOperation.Sqllite3Example()
-	//c1 := make(chan string)
-	c2 := make(chan string)
-	go func() {
-		//c1 <- "string c1"
-	}()
-	go func() {
-		time.AfterFunc(time.Second*5, func() {
-			c2 <- "string c2"
-		})
-	}()
-	select {
-	case msg2 := <-c2:
-		fmt.Println(msg2)
-	}
 }
