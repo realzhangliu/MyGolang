@@ -5,6 +5,7 @@ import (
 	"math/rand"
 
 	_ "github.com/netldds/MyGolang/Hash"
+	"net/url"
 )
 
 func algorithmStart(name string) {
@@ -37,5 +38,7 @@ func main() {
 	//Hash.NewHash()
 	//DataBaseOperation.MysqlExample()
 	//DataBaseOperation.Sqllite3Example()
+	u1,_:=url.Parse("http://www.google.com/1.php")
+	fmt.Println(u1)
 
 }
