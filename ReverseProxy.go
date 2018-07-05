@@ -14,6 +14,5 @@ func ReverseProxyStart(){
 
 	u1,_:=url.Parse("http://www.baidu.com")
 	http.Handle("www.baidu.com",httputil.NewSingleHostReverseProxy(u1))
-	u2,_:=url.Parse("http://www.163.com")
 	http.ListenAndServe(":80",nil)
 }

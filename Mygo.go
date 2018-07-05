@@ -5,7 +5,7 @@ import (
 	"math/rand"
 
 	_ "github.com/netldds/MyGolang/Hash"
-	"net/url"
+	"regexp"
 )
 
 func algorithmStart(name string) {
@@ -28,6 +28,9 @@ func algorithmStart(name string) {
 	}
 
 }
+type Recurlyservers struct {
+	JsonName string `json:"json_name"`
+}
 
 func main() {
 	defer func() {
@@ -38,7 +41,8 @@ func main() {
 	//Hash.NewHash()
 	//DataBaseOperation.MysqlExample()
 	//DataBaseOperation.Sqllite3Example()
-	u1,_:=url.Parse("http://www.google.com/1.php")
-	fmt.Println(u1)
-
+	re,_:=regexp.Compile("\\<style[\\S\\s]+?\\</style\\>")
+	if re.MatchString("abcddd") {
+		fmt.Println()
+	}
 }
