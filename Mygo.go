@@ -41,8 +41,7 @@ func main() {
 	//Hash.NewHash()
 	//DataBaseOperation.MysqlExample()
 	//DataBaseOperation.Sqllite3Example()
-	re,_:=regexp.Compile("\\<style[\\S\\s]+?\\</style\\>")
-	if re.MatchString("abcddd") {
-		fmt.Println()
-	}
+	re,_:=regexp.Compile("[0-9a-zA-Z|-|\\.]*")
+	result:=re.FindAllIndex([]byte("https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/07.3.md"),5)
+	fmt.Println(result)
 }
