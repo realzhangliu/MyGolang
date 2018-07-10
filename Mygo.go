@@ -34,14 +34,13 @@ type Recurlyservers struct {
 
 func main() {
 	defer func() {
-		fmt.Print("\nFinally!")
+		fmt.Print("\n Processing has done!")
 	}()
 	//RunMatrixMutiply()
 	//MyUploadServer.Start()
 	//Hash.NewHash()
 	//DataBaseOperation.MysqlExample()
 	//DataBaseOperation.Sqllite3Example()
-	re,_:=regexp.Compile("[0-9a-zA-Z|-|\\.]*")
-	result:=re.FindAllIndex([]byte("https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/07.3.md"),5)
-	fmt.Println(result)
+
+
 }
