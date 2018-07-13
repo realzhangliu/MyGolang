@@ -5,7 +5,6 @@ import (
 	"math/rand"
 
 	_ "github.com/netldds/MyGolang/Hash"
-	"regexp"
 )
 
 func algorithmStart(name string) {
@@ -41,6 +40,8 @@ func main() {
 	//Hash.NewHash()
 	//DataBaseOperation.MysqlExample()
 	//DataBaseOperation.Sqllite3Example()
+
+
 
 
 }

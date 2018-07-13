@@ -16,3 +16,4 @@ debug
 MyUploadServer/upload/
 StandardTCPClient/t.dat
 .idea/
+ImageOperation/output.jpg
