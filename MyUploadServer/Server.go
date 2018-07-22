@@ -11,13 +11,19 @@ import (
 	"strconv"
 	"time"
 
-	"html/template"
-	"path/filepath"
 	"crypto/md5"
+	"encoding/json"
+	"html/template"
 	"net/url"
+	"path/filepath"
 )
 
 var projectPath string
+
+type usertype struct {
+	ID  string `json:id`
+	Pwd string `json:"password"`
+}
 
 func Start() {
 	//fmt.Println(os.Args[0])
@@ -44,24 +50,27 @@ func logout(writer http.ResponseWriter, r *http.Request) {
 }
 func syahelloName(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
+	fmt.Println(r.Header.Get("Content-Type"))
 	//fmt.Println(r.Form)
 	//fmt.Println("path", r.URL.Path)
 	//fmt.Println("scheme", r.URL.Scheme)
 	//fmt.Println(r.Form["url_long"])
 	for key, value := range r.Form {
 		fmt.Println("key:", key)
-		fmt.Print("val:", value)
+		fmt.Println("val:", value)
 	}
-	for _,v:=range r.Cookies(){
-		fmt.Fprintf(w, "cookies:%v\n",v)
+	for _, v := range r.Cookies() {
+		fmt.Fprintf(w, "cookies:%v\n", v)
 		fmt.Println(v)
 	}
 	//MaxAge是秒单位
 	//Name是服务器指定的固定名字，Value是分每个客户端分配的唯一标识
-	cookie:=http.Cookie{Name:"MyCookieName",Value:url.QueryEscape("ValueAsSID"),Path:"/",HttpOnly:true,MaxAge:3600}
+	cookie := http.Cookie{Name: "MyCookieName", Value: url.QueryEscape("ValueAsSID"), Path: "/", HttpOnly: true, MaxAge: 3600}
 	//发送COOKIE给客户端
-	http.SetCookie(w,&cookie)
-	fmt.Fprintf(w,"%s","Initialization.")
+	http.SetCookie(w, &cookie)
+	var out usertype
+	json.NewDecoder(r.Body).Decode(&out)
+	fmt.Println(out)
 	//http.Redirect(w,r,"http://www.baidu.com",http.StatusFound)
 }
 
@@ -76,9 +85,9 @@ func uploadHandler(writer http.ResponseWriter, r *http.Request) {
 			file, err := value.Open()
 			CheckHttpErrors(err, writer)
 			defer file.Close()
-			md5str:=md5.New()
-			io.WriteString(md5str,strconv.Itoa(time.Now().Second()))
-			fullfilename:=fmt.Sprintf("%s/upload/%x%s",projectPath,md5str.Sum(nil),value.Filename)
+			md5str := md5.New()
+			io.WriteString(md5str, strconv.Itoa(time.Now().Second()))
+			fullfilename := fmt.Sprintf("%s/upload/%x%s", projectPath, md5str.Sum(nil), value.Filename)
 			//dst, err2 := os.Create(projectPath + "/upload/" +  + value.Filename)
 			dst, err2 := os.Create(fullfilename)
 			defer dst.Close()

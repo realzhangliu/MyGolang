@@ -10,7 +10,7 @@ type Persion struct {
 	UserName string
 }
 
-func main(){
+func main3(){
 	t:=template.New("fieldname")
 	t,_=t.Parse("hello {{.UserName}}")
 	p:=Persion{UserName:"UserAL"}

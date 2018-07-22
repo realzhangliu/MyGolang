@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func main(){
+func main2(){
 	re,_:=regexp.Compile("[0-9a-zA-Z|-|\\.]*")
 	result:=re.FindAllIndex([]byte("https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/07.3.md"),5)
 	fmt.Println(result)
