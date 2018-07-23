@@ -7,6 +7,7 @@ import (
 	"log"
 	"net"
 	"net/rpc"
+	"net/rpc/jsonrpc"
 	"os"
 )
 
@@ -55,9 +56,10 @@ func main() {
 		if err != nil {
 			continue
 		}
-		go handleConnection(conn)
+		//go handleConnection(conn)
 		//rpc
 		//go rpc.ServeConn(conn)
+		go jsonrpc.ServeConn(conn)
 	}
 
 }

@@ -5,22 +5,23 @@ import (
 	"fmt"
 	"log"
 	"net"
-	"os"
 	"net/rpc"
+	"os"
 )
-
 
 func CheckErr(e error) {
 	if e != nil {
 		log.Fatal(e)
 	}
 }
+
 type Args struct {
 	A, B int
 }
 type Quotient struct {
 	Quo, Rem int
 }
+
 func main() {
 
 	//rpcclient()
@@ -60,10 +61,10 @@ func handleMessageFromServer(conn *net.TCPConn) {
 	}
 }
 func rpcclient() {
-	client,err:=rpc.Dial("tcp","127.0.0.1:8080")
+	client, err := rpc.Dial("tcp", "127.0.0.1:8080")
 	CheckErr(err)
 	var reply int
-	err=client.Call("Arith.Multiply",&Args{A:11,B:11},&reply)
+	err = client.Call("Arith.Multiply", &Args{A: 11, B: 11}, &reply)
 	CheckErr(err)
 	fmt.Printf("Arith: %d*%d=%d\n", 11, 11, reply)
 }
