@@ -13,7 +13,9 @@ import (
 
 	"crypto/md5"
 	"encoding/json"
+	"errors"
 	"html/template"
+	"net/rpc"
 	"net/url"
 	"path/filepath"
 )
@@ -24,10 +26,44 @@ type usertype struct {
 	ID  string `json:id`
 	Pwd string `json:"password"`
 }
+type Args struct {
+	A, B int
+}
+type Quotient struct {
+	Quo, Rem int
+}
+//支持的RPC运算方法，所有方法以结构为基础
+type Arith int
+
+//支持多个不同结构方法
+type Brith int
+
+func (t *Arith) Multiply(args *Args, reply *int) error {
+	*reply = args.A * args.B
+	return nil
+}
+func (t *Arith) Divide(args *Args, quo *Quotient) error {
+	if args.B == 0 {
+		return errors.New("divide by zero.")
+	}
+	quo.Quo = args.A / args.B
+	quo.Rem = args.A % args.B
+	return nil
+}
+func (e *Brith) Add(in *int, out *int) error {
+	*out = *in + 1
+	return nil
+}
 
 func Start() {
 	//fmt.Println(os.Args[0])
-	//Path for assets
+	//PRC
+	arith := new(Arith)
+	brith := new(Brith)
+	rpc.Register(brith)
+	rpc.Register(arith)
+	rpc.HandleHTTP()
+
 	var err error
 	projectPath, err = os.Getwd()
 	if err != nil {
