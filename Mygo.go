@@ -5,7 +5,6 @@ import (
 	"math/rand"
 
 	_ "github.com/netldds/MyGolang/Hash"
-	"github.com/netldds/MyGolang/MyUploadServer"
 )
 
 func algorithmStart(name string) {
@@ -38,9 +37,8 @@ func main() {
 		fmt.Print("\n Processing has done!")
 	}()
 	//RunMatrixMutiply()
-	MyUploadServer.Start()
+	//MyUploadServer.Start()
 	//Hash.NewHash()
 	//DataBaseOperation.MysqlExample()
 	//DataBaseOperation.Sqllite3Example()
-
 }
