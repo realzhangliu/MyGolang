@@ -41,4 +41,6 @@ func main() {
 	//Hash.NewHash()
 	//DataBaseOperation.MysqlExample()
 	//DataBaseOperation.Sqllite3Example()
+	//AtomicCounterExample()
+	MutexSample()
 }
