@@ -42,5 +42,6 @@ func main() {
 	//DataBaseOperation.MysqlExample()
 	//DataBaseOperation.Sqllite3Example()
 	//AtomicCounterExample()
-	MutexSample()
+	//MutexSample()
+	SignalExample()
 }
