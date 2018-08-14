@@ -1,4 +1,4 @@
-package main
+package Misc
 
 import (
 	"html/template"
@@ -10,7 +10,7 @@ type Persion struct {
 	UserName string
 }
 
-func main3(){
+func TemplateExample(){
 	t:=template.New("fieldname")
 	t,_=t.Parse("hello {{.UserName}}")
 	p:=Persion{UserName:"UserAL"}

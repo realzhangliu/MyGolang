@@ -5,6 +5,10 @@ import (
 	"math/rand"
 
 	_ "github.com/netldds/MyGolang/Hash"
+	"github.com/netldds/MyGolang/Misc"
+	"bufio"
+	"os"
+	"github.com/go-xorm/xorm"
 )
 
 func algorithmStart(name string) {
@@ -15,11 +19,11 @@ func algorithmStart(name string) {
 	}
 	switch name {
 	case "QuickSort":
-		QuickSort(a, 0, len(a)-1)
+		Misc.QuickSort(a, 0, len(a)-1)
 		fmt.Printf("Sorted array is :%v\n", a)
 
 	case "MergeSort":
-		MergeSort(a, 0, len(a)-1)
+		Misc.MergeSort(a, 0, len(a)-1)
 		fmt.Printf("Sorted array is :%v\n", a)
 
 	default:
@@ -31,6 +35,7 @@ func algorithmStart(name string) {
 type Recurlyservers struct {
 	JsonName string `json:"json_name"`
 }
+var engine *xorm.Engine
 
 func main() {
 	defer func() {
@@ -43,5 +48,10 @@ func main() {
 	//DataBaseOperation.Sqllite3Example()
 	//AtomicCounterExample()
 	//MutexSample()
-	SignalExample()
+	//Misc.SignalExample()
+}
+
+func InputLoop() {
+	rd:=bufio.NewReader(os.Stdin)
+
 }

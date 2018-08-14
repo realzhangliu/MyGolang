@@ -1,21 +1,15 @@
-package main
+package Misc
 
 import (
-	"regexp"
 	"fmt"
+	"regexp"
 )
 
-func main2(){
-	re,_:=regexp.Compile("[0-9a-zA-Z|-|\\.]*")
-	result:=re.FindAllIndex([]byte("https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/07.3.md"),5)
+func RegexpExample() {
+	re, _ := regexp.Compile("[0-9a-zA-Z|-|\\.]*")
+	result := re.FindAllIndex([]byte("https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/07.3.md"), 5)
 	fmt.Println(result)
 }
-
-
-
-
-
-
 
 //
 //特别字符	描述
@@ -61,4 +55,3 @@ func main2(){
 //如果只想匹配开始的 H1 标签，表达式则是：
 ///<\w+?>/
 //
-
