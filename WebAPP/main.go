@@ -30,7 +30,7 @@ func main() {
 	//WebSocketImplementation()
 	//StartSrv()
 	input()
-
+	XormExample()
 }
 func input() {
 	rd := bufio.NewReader(os.Stdin)

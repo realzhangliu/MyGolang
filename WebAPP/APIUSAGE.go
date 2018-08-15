@@ -563,8 +563,8 @@ func Practice() {
 }
 
 //DB Operation
-var dataSourceName1 string = "root:0000@tcp(192.168.1.146)/person"
-var dataSourceName2 string = "ml:0000@tcp(127.0.0.1)/person"
+var DBSourceName1 string = "root:0000@tcp(192.168.1.146)/person"
+var DBSourceName2 string = "ml:0000@tcp(127.0.0.1)/person"
 
 func queryDB() {
 	r := gin.Default()

@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"math/rand"
 
-	_ "github.com/netldds/MyGolang/Hash"
-	"github.com/netldds/MyGolang/Misc"
 	"bufio"
 	"os"
-	"github.com/go-xorm/xorm"
+
+	_ "github.com/netldds/MyGolang/Hash"
+	"github.com/netldds/MyGolang/Misc"
 )
 
 func algorithmStart(name string) {
@@ -35,7 +35,6 @@ func algorithmStart(name string) {
 type Recurlyservers struct {
 	JsonName string `json:"json_name"`
 }
-var engine *xorm.Engine
 
 func main() {
 	defer func() {
@@ -49,9 +48,18 @@ func main() {
 	//AtomicCounterExample()
 	//MutexSample()
 	//Misc.SignalExample()
+	//Misc.XormExample()
+	Misc.Byte2Int()
 }
 
 func InputLoop() {
-	rd:=bufio.NewReader(os.Stdin)
+	rd := bufio.NewReader(os.Stdin)
+	for {
+		str, err := rd.ReadString('\n')
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(str)
+	}
 
 }
