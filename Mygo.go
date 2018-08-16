@@ -48,8 +48,8 @@ func main() {
 	//AtomicCounterExample()
 	//MutexSample()
 	//Misc.SignalExample()
-	//Misc.XormExample()
-	Misc.Byte2Int()
+	Misc.XormExample()
+
 }
 
 func InputLoop() {

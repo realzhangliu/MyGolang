@@ -3,40 +3,44 @@ package Misc
 import (
 	"fmt"
 
-	"encoding/binary"
-
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
-	"math"
+	"time"
 )
 
 var engine *xorm.Engine
+
+type labor struct {
+	Id         int64
+	Name       string `xorm:"varchar(20) notnull 'name'"`
+	Age        int    `xorm:"int(3) notnull "`
+	Occupation string `xorm:"varchar(30) notnull"`
+}
 
 func XormExample() {
 	var err error
 	engine, err = xorm.NewEngine("mysql", "ml:0000@/person?charset=utf8mb4")
 	checkError(err)
 	err = engine.Ping()
-	result, err := engine.Query("select * from labor")
-	for _, v := range result {
-		id := binary.LittleEndian.Uint32(v["ID"])
-		fmt.Printf("%d\n%s\n%s\n%s\n", id, string(v["name"]), v["age"], string(v["occupation"]))
+	var lb labor
+	_, err = engine.Table("labor_bak").Where("ID=?", "2").Get(&lb)
+	//fmt.Println(lb, flag)
 
-	}
+	var pwd []string
+	engine.Table("labor_bak").Cols("password").Find(&pwd)
+	//fmt.Println(pwd)
 
+	cols := []string{"name", "age", "password"}
+	var valuesSlice = make([]interface{}, len(cols))
+	engine.Table("labor_bak").Cols(cols...).Get(&valuesSlice)
+	fmt.Println(string(valuesSlice[1].([]byte)))
+time.Now().Format()
 }
-var pl=fmt.Println
-func Byte2Int() {
-	//var i uint32
-	var b []byte
-	b=make([]byte,4)
-	pl(math.Float32bits(10))
-	binary.LittleEndian.PutUint32(b,math.Float32bits(10))
-	pl(b)
 
-	//conversion
-	bits:=binary.LittleEndian.Uint32(b)
-	result:=math.Float32frombits(bits)
-	pl(result)
-
+func backup() {
+	engine.Insert(&labor{
+		Name:       "xorm",
+		Age:        233,
+		Occupation: "Golang package",
+	})
 }
