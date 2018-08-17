@@ -9,6 +9,7 @@ import (
 
 	_ "github.com/netldds/MyGolang/Hash"
 	"github.com/netldds/MyGolang/Misc"
+	"time"
 )
 
 func algorithmStart(name string) {
@@ -48,8 +49,9 @@ func main() {
 	//AtomicCounterExample()
 	//MutexSample()
 	//Misc.SignalExample()
-	Misc.XormExample()
-
+	//Misc.XormExample()
+	//Misc.TimeExample()
+	fmt.Println(time.)
 }
 
 func InputLoop() {
