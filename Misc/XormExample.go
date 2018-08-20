@@ -16,14 +16,14 @@ type labor struct {
 	Occupation string `xorm:"varchar(30) notnull"`
 }
 
-var DBSource string = "ml:0000@tcp(192.168.1.109)/person?charset=utf8mb4"
+var DBSource string = "ml:0000@tcp(192.168.1.103)/person?charset=utf8mb4"
 var DBSource_loal string = "root:0000@/person?charset=utf8mb4"
 
 var pln = fmt.Println
 
 func XormExample() {
 	var err error
-	engine, err = xorm.NewEngine("mysql", DBSource_loal)
+	engine, err = xorm.NewEngine("mysql", DBSource)
 	checkError(err)
 	err = engine.Ping()
 
@@ -147,7 +147,7 @@ func XormExample() {
 
 	//update
 	updateFunc := func() {
-		//return
+		return
 		//engine.Where("age=?", 11).Update(&labor{Age: 28})
 		var i []int = []int{1, 2, 3}
 		engine.In("ID", i).Update(&labor{Age: 88})
@@ -169,6 +169,14 @@ func XormExample() {
 		engine.Where("name=?", "a").Delete(&labor{})
 	}
 	deleteFunc()
+
+	//count
+	countFunc := func() {
+		//return
+		i, _ := engine.Count(&labor{Occupation: "Programmar"})
+		fmt.Println(i)
+	}
+	countFunc()
 }
 
 func backup() {
