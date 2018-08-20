@@ -153,6 +153,10 @@ func DefaultAPI() {
 
 	r := gin.Default()
 
+	r.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, "%s", c.Request.Host)
+	})
+
 	r.GET("/user", func(c *gin.Context) {
 		c.String(http.StatusOK, "page found.%s\n%s", c.Query("firstname"), c.Query("lastname"))
 	})
@@ -197,7 +201,9 @@ func DefaultAPI() {
 		c.String(200, "v2 login")
 	})
 
-	r.Run(":80")
+	//r.Run(":8080")
+	r.RunTLS(":8080", "server.crt", "server.key")
+
 }
 
 func ClockStream() {
@@ -569,7 +575,7 @@ var DBSourceName2 string = "ml:0000@tcp(127.0.0.1)/person"
 func queryDB() {
 	r := gin.Default()
 
-	db, err := sql.Open("mysql", dataSourceName2)
+	db, err := sql.Open("mysql", DBSourceName1)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -7,6 +7,8 @@ import (
 	"bufio"
 	"os"
 
+	"reflect"
+
 	_ "github.com/netldds/MyGolang/Hash"
 	"github.com/netldds/MyGolang/Misc"
 )
@@ -34,6 +36,26 @@ func algorithmStart(name string) {
 
 type Recurlyservers struct {
 	JsonName string `json:"json_name"`
+}
+
+type b struct {
+	counter int
+}
+
+type hibt interface {
+	binterface()
+}
+type otherbt interface {
+	ointerface()
+}
+
+func (e b) binterface() {
+	fmt.Println("print b interface.")
+	fmt.Println(e.counter)
+}
+func (e b) ointerface() {
+	fmt.Println("print o interface.")
+	fmt.Println(e.counter)
 }
 
 func main() {
