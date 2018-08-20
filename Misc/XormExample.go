@@ -27,67 +27,148 @@ func XormExample() {
 	checkError(err)
 	err = engine.Ping()
 
-	//Query one record
-	pln("Query one record")
 	var lb labor
-	_, err = engine.Table("labor").Where("ID=?", "1").Get(&lb)
-	pln(lb)
+
+	//Query one record
+	queryOnerecord := func() {
+		return
+		pln("Query one record")
+		_, err = engine.Table("labor").Where("ID=?", "1").Get(&lb)
+		pln(lb)
+	}
+	queryOnerecord()
 
 	//Query multiple records
-	pln("Query multiple records")
-	var pwd []string
-	engine.Table("labor").Cols("name").Find(&pwd)
-	pln(pwd)
+	queryMultipleRecord := func() {
+		return
+		pln("Query multiple records")
+		var pwd []string
+		engine.Table("labor").Cols("name").Find(&pwd)
+		pln(pwd)
+	}
+	queryMultipleRecord()
 
 	//Query one record
-	pln("Query one record")
-	cols := []string{"name", "age"}
-	var valuesSlice = make([]interface{}, len(cols))
-	engine.Table("labor").Cols(cols...).Get(&valuesSlice)
-	pln(string(valuesSlice[1].([]byte)))
+	queryOnerecord2 := func() {
+		return
+		pln("Query one record")
+		cols := []string{"name", "age"}
+		var valuesSlice = make([]interface{}, len(cols))
+		engine.Table("labor").Cols(cols...).Get(&valuesSlice)
+		pln(string(valuesSlice[1].([]byte)))
+	}
+	queryOnerecord2()
 
 	//Insert
-	pln("Insert")
-	pln(lb)
-	lb.Id = 0
-	//labor{Name: "tt",
-	//	Age:        11,
-	//	Occupation: "programmer"}
-	//i64, _ := engine.Insert(lb)
-	//pln(i64)
+	Insert1 := func() {
+		return
+		pln("Insert")
+		pln(lb)
+		//lb.Id = 0
+		lb = labor{Name: "tt",
+			Age:        11,
+			Occupation: "programmer"}
+		i64, _ := engine.Insert(lb)
+		pln(i64)
+	}
+	Insert1()
 
 	//check if one record is exist on table.
-	pln("check if one record is exist on table.")
-	lb = labor{
-		Name: "zl",
+	checkIfOnerecordisExist := func() {
+		return
+		pln("check if one record is exist on table.")
+		lb = labor{
+			Name: "zl",
+		}
+		ok, _ := engine.Table("labor").Exist(&lb)
+		if ok {
+			pln("FOUND.")
+		}
+		if ok, err = engine.Table("labor").Where("id=?", 2).Exist(); ok {
+			pln("id=2 found.")
+		}
 	}
-	ok, err := engine.Table("labor").Exist(&lb)
-	if ok {
-		pln("FOUND.")
-	}
-	if ok, err = engine.Table("labor").Where("id=?", 2).Exist(); ok {
-		pln("id=2 found.")
-	}
+	checkIfOnerecordisExist()
 
 	//query multiple records
-	pln("query multiple records")
-	var lbs []labor
-	err = engine.Table("labor").Where("name=?", "zl").And("age >?", 1).Limit(10, 0).Find(&lbs)
-	pln(lbs)
-
-	var ress []struct {
-		Id             int    `xorm:"id"`
-		Name           string `xorm:"name"`
-		Age            int    `xorm:"age"`
-		Occupation     string `xorm:"occupation"`
-		Id_bak         int    `xorm:"id_bak"`
-		Name_bak       string `xorm:"name_bak"`
-		Occupation_bak string `xorm:"occupation_bak"`
-		Password_bak   string `oxrm:"password_bak"`
+	queryMultipleRecords := func() {
+		return
+		pln("query multiple records")
+		var lbs []labor
+		err = engine.Table("labor").Where("name=?", "zl").And("age >?", 1).Limit(10, 0).Find(&lbs)
+		pln(lbs)
 	}
-	err = engine.Table("labor").Select("labor.ID,labor.name,labor.age,labor.occupation,labor_bak.ID as 'id_bak',labor_bak.name as 'name_bak',labor_bak.occupation as 'occupation_bak',labor_bak.password as 'password_bak'").Join("INNER", "labor_bak", "labor.age=labor_bak.age").Limit(10, 0).Where("labor.age=?", 28).Find(&ress)
-	pln(ress)
+	queryMultipleRecords()
 
+	JoinTableResult := func() {
+		return
+		var ress []struct {
+			Id             int    `xorm:"id"`
+			Name           string `xorm:"name"`
+			Age            int    `xorm:"age"`
+			Occupation     string `xorm:"occupation"`
+			Id_bak         int    `xorm:"id_bak"`
+			Name_bak       string `xorm:"name_bak"`
+			Occupation_bak string `xorm:"occupation_bak"`
+			Password_bak   string `oxrm:"password_bak"`
+		}
+		err = engine.Table("labor").Select("labor.ID,labor.name,labor.age,labor.occupation,labor_bak.ID as 'id_bak',labor_bak.name as 'name_bak',labor_bak.occupation as 'occupation_bak',labor_bak.password as 'password_bak'").Join("INNER", "labor_bak", "labor.age=labor_bak.age").Limit(10, 0).Where("labor.age=?", 28).Find(&ress)
+		pln(ress)
+	}
+	JoinTableResult()
+
+	//Iterate
+	IterateFunc := func() {
+		return
+		engine.BufferSize(100).Iterate(&labor{Age: 28}, func(idx int, bean interface{}) error {
+			//limit
+			//idx is index of result,not id.
+			if be, ok := bean.(*labor); ok {
+				fmt.Println(be.Id)
+			}
+			return nil
+		})
+	}
+	IterateFunc()
+
+	//Rows
+	RowsFunc := func() {
+		return
+		rows, _ := engine.Rows(&labor{Age: 28})
+		defer rows.Close()
+		for rows.Next() {
+			be := new(labor)
+			rows.Scan(be)
+			fmt.Println(be.Name)
+		}
+
+	}
+	RowsFunc()
+
+	//update
+	updateFunc := func() {
+		//return
+		//engine.Where("age=?", 11).Update(&labor{Age: 28})
+		var i []int = []int{1, 2, 3}
+		engine.In("ID", i).Update(&labor{Age: 88})
+		// force update indicated columns by Cols
+		engine.Id(1).Cols("name").Update(&labor{Name: "hh", Age: 22})
+
+		// force NOT update indicated columns by Omit
+		engine.Id(1).Omit("name").Update(&labor{Name: "hh", Age: 22})
+
+		engine.Id(1).AllCols().Update(&labor{Name: "hh", Age: 22})
+
+	}
+	updateFunc()
+
+	//delete one or more records, Delete MUST have condition
+	deleteFunc := func() {
+		return
+		//bean也是条件参数，会和where里面的参数合并
+		engine.Where("name=?", "a").Delete(&labor{})
+	}
+	deleteFunc()
 }
 
 func backup() {
