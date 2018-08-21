@@ -2,9 +2,12 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"log"
 	"net"
+	"net/rpc"
+	"net/rpc/jsonrpc"
 	"os"
 )
 
@@ -14,12 +17,36 @@ func Checkerr(e error) {
 		os.Exit(0)
 	}
 }
-func main() {
 
+type Args struct {
+	A, B int
+}
+type Quotient struct {
+	Quo, Rem int
+}
+
+//支持的RPC运算方法，所有方法以结构为基础
+type Arith int
+
+func (t *Arith) Multiply(args *Args, reply *int) error {
+	*reply = args.A * args.B
+	return nil
+}
+func (t *Arith) Divide(args *Args, quo *Quotient) error {
+	if args.B == 0 {
+		return errors.New("divide by zero.")
+	}
+	quo.Quo = args.A / args.B
+	quo.Rem = args.A % args.B
+	return nil
+}
+func main() {
+	arith := new(Arith)
+	rpc.Register(arith)
 	fmt.Println("Launching server...")
 
 	// listen on all interfaces
-	ln, _ := net.Listen("tcp", ":8081")
+	ln, _ := net.Listen("tcp", ":8080")
 
 	// accept connection on port
 	defer ln.Close()
@@ -29,8 +56,12 @@ func main() {
 		if err != nil {
 			continue
 		}
-		go handleConnection(conn)
+		//go handleConnection(conn)
+		//rpc
+		//go rpc.ServeConn(conn)
+		go jsonrpc.ServeConn(conn)
 	}
+
 }
 func handleConnection(conn net.Conn) {
 	remoteAddr := conn.RemoteAddr().String()

@@ -1,4 +1,4 @@
-package main
+package Misc
 
 var a chan string
 
