@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/go-xorm/builder"
 	"github.com/go-xorm/xorm"
 )
 
@@ -23,11 +24,12 @@ var pln = fmt.Println
 
 func XormExample() {
 	var err error
-	engine, err = xorm.NewEngine("mysql", DBSource)
+	engine, err = xorm.NewEngine("mysql", DBSource_loal)
 	checkError(err)
 	err = engine.Ping()
 
 	var lb labor
+	var lbs []labor
 
 	//Query one record
 	queryOnerecord := func() {
@@ -94,8 +96,7 @@ func XormExample() {
 	queryMultipleRecords := func() {
 		return
 		pln("query multiple records")
-		var lbs []labor
-		err = engine.Table("labor").Where("name=?", "zl").And("age >?", 1).Limit(10, 0).Find(&lbs)
+		err = engine.Table("labor").Where("name=?", "xorm").And("age >?", 1).Limit(10, 0).Find(&lbs)
 		pln(lbs)
 	}
 	queryMultipleRecords()
@@ -172,11 +173,29 @@ func XormExample() {
 
 	//count
 	countFunc := func() {
-		//return
+		return
 		i, _ := engine.Count(&labor{Occupation: "Programmar"})
-		fmt.Println(i)
+		pln(i)
 	}
 	countFunc()
+	//Sum
+	SumFunc := func() {
+		//sum of age with named 'xorm'
+		return
+		agesfloat64, _ := engine.Sum(&labor{Name: "xorm"}, "age")
+		fmt.Println(agesfloat64)
+	}
+	SumFunc()
+
+	//Query conditions builder
+	queryConditionFunc := func() {
+		//return
+		var lbs []labor
+		err = engine.Where(builder.NotIn("occupation", "Friar").And(builder.In("age", 88))).Find(&lbs)
+		//engine.Table("labor").Where("age=?", 88).Find(&lbs)
+		pln(lbs)
+	}
+	queryConditionFunc()
 }
 
 func backup() {

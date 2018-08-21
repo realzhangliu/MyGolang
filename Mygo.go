@@ -48,7 +48,7 @@ func main() {
 	//AtomicCounterExample()
 	//MutexSample()
 	//Misc.SignalExample()
-	Misc.XormExample()
+	//Misc.XormExample()
 	//Misc.TimeExample()
 	//var i []int=[]int{1,2,3}
 
