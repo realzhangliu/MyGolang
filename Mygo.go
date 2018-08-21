@@ -52,16 +52,10 @@ func main() {
 	//Misc.TimeExample()
 	//var i []int=[]int{1,2,3}
 
-}
 
-func InputLoop() {
-	rd := bufio.NewReader(os.Stdin)
-	for {
-		str, err := rd.ReadString('\n')
-		if err != nil {
-			fmt.Println(err)
-		}
-		fmt.Println(str)
-	}
+	//RunPingPongGame()
+
+	testChannel()
+	select{}
 
 }

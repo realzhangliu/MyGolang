@@ -10,9 +10,9 @@ type Persion struct {
 	UserName string
 }
 
-func TemplateExample(){
-	t:=template.New("fieldname")
-	t,_=t.Parse("hello {{.UserName}}")
-	p:=Persion{UserName:"UserAL"}
-	t.Execute(os.Stdout,p)
+func main_t2() {
+	t := template.New("fieldname")
+	t, _ = t.Parse("hello {{.UserName}}")
+	p := Persion{UserName: "UserAL"}
+	t.Execute(os.Stdout, p)
 }
