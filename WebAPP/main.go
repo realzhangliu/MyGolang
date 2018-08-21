@@ -10,7 +10,7 @@ import (
 //GIN FrameWork APP
 func main() {
 
-	DefaultAPI()
+	//DefaultAPI()
 	//	Middleware()
 	//renderData()
 	//ClockStream()
@@ -30,6 +30,7 @@ func main() {
 	//WebSocketImplementation()
 	//StartSrv()
 	//input()
+	ForwardProxyStart()
 }
 func input() {
 	rd := bufio.NewReader(os.Stdin)

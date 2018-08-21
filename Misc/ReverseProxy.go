@@ -1,18 +1,26 @@
 package Misc
 
 import (
-	"net/http"
+	"crypto/tls"
+	"flag"
 	"fmt"
-	"net/url"
+	"io"
+	"log"
+	"net"
+	"net/http"
 	"net/http/httputil"
+	"net/url"
+	"time"
 )
 
-func ReverseProxyStart(){
+func ReverseProxyStart() {
 	http.HandleFunc("/new", func(writer http.ResponseWriter, request *http.Request) {
-		fmt.Fprint(writer,"new function")
+		fmt.Fprint(writer, "new function")
 	})
 
-	u1,_:=url.Parse("http://www.baidu.com")
-	http.Handle("www.baidu.com",httputil.NewSingleHostReverseProxy(u1))
-	http.ListenAndServe(":80",nil)
+	u1, _ := url.Parse("http://www.baidu.com")
+	http.Handle("www.baidu.com", httputil.NewSingleHostReverseProxy(u1))
+	http.ListenAndServe(":80", nil)
 }
+
+
