@@ -39,6 +39,19 @@ type II struct {
 	index int
 }
 
+func calc() func() func() func() {
+	fmt.Println("connect")
+	return func() func() func() {
+		fmt.Println("disconnect")
+		return func() func() {
+			fmt.Println("hahaha")
+			return func() {
+				fmt.Println("lalala")
+			}
+		}
+	}
+}
+
 func main() {
 	defer func() {
 		fmt.Print("\n Processing has done!")
@@ -54,13 +67,6 @@ func main() {
 	//Misc.XormExample()
 	//Misc.TimeExample()
 	//var i []int=[]int{1,2,3}
-	//var i []II = []II{{index: 0}, {index: 1}, {index: 2}}
-	//fmt.Println(reflect.TypeOf(i).Kind())
-	//for _, v := range i {
-	//	fmt.Println(reflect.TypeOf(v))
-	//v.index=99
-	//}
-	//fmt.Println(i)
 }
 
 func InputLoop() {
