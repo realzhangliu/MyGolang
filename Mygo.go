@@ -35,6 +35,9 @@ func algorithmStart(name string) {
 type Recurlyservers struct {
 	JsonName string `json:"json_name"`
 }
+type II struct {
+	index int
+}
 
 func main() {
 	defer func() {
@@ -51,11 +54,23 @@ func main() {
 	//Misc.XormExample()
 	//Misc.TimeExample()
 	//var i []int=[]int{1,2,3}
+	//var i []II = []II{{index: 0}, {index: 1}, {index: 2}}
+	//fmt.Println(reflect.TypeOf(i).Kind())
+	//for _, v := range i {
+	//	fmt.Println(reflect.TypeOf(v))
+	//v.index=99
+	//}
+	//fmt.Println(i)
+}
 
-
-	//RunPingPongGame()
-
-	testChannel()
-	select{}
+func InputLoop() {
+	rd := bufio.NewReader(os.Stdin)
+	for {
+		str, err := rd.ReadString('\n')
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(str)
+	}
 
 }
