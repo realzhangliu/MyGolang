@@ -1,16 +1,10 @@
 package Misc
 
 import (
-	"crypto/tls"
-	"flag"
 	"fmt"
-	"io"
-	"log"
-	"net"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
-	"time"
 )
 
 func ReverseProxyStart() {
@@ -22,5 +16,3 @@ func ReverseProxyStart() {
 	http.Handle("www.baidu.com", httputil.NewSingleHostReverseProxy(u1))
 	http.ListenAndServe(":80", nil)
 }
-
-
