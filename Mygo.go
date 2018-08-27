@@ -8,8 +8,6 @@ import (
 	_ "net/http/pprof"
 	"os"
 
-	"net/http"
-
 	_ "github.com/netldds/MyGolang/Hash"
 	"github.com/netldds/MyGolang/Misc"
 )
@@ -71,7 +69,7 @@ func main() {
 	//Misc.TimeExample()
 	//var i []int=[]int{1,2,3}
 	//Misc.RwMutexExample()
-	http.ListenAndServe(":80", nil)
+	//http.ListenAndServe(":80", nil)
 }
 
 func InputLoop() {
