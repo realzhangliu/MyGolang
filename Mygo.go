@@ -8,6 +8,7 @@ import (
 	_ "net/http/pprof"
 	"os"
 
+	"github.com/netldds/MyGolang/AuthenticationServer"
 	_ "github.com/netldds/MyGolang/Hash"
 	"github.com/netldds/MyGolang/Misc"
 )
@@ -70,6 +71,7 @@ func main() {
 	//var i []int=[]int{1,2,3}
 	//Misc.RwMutexExample()
 	//http.ListenAndServe(":80", nil)
+	AuthenticationServer.StartJWT()
 }
 
 func InputLoop() {
