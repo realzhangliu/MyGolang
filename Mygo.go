@@ -8,8 +8,6 @@ import (
 	_ "net/http/pprof"
 	"os"
 
-	"net/url"
-
 	_ "github.com/netldds/MyGolang/Hash"
 	"github.com/netldds/MyGolang/Misc"
 )
@@ -73,8 +71,6 @@ func main() {
 	//Misc.RwMutexExample()
 	//http.ListenAndServe(":80", nil)
 	//AuthenticationServer.StartJWT()
-	thisurl, _ := url.Parse("http://localhost/ha\\ha?a=b&c=d")
-	fmt.Println(thisurl.Path)
 }
 
 func InputLoop() {
