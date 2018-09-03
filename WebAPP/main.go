@@ -13,7 +13,7 @@ func main() {
 	//DefaultAPI()
 	//	Middleware()
 	//renderData()
-	//ClockStream()
+	ClockStream()
 	//ServingData()
 	//htmlRendering()
 	//middleRun()
@@ -30,7 +30,7 @@ func main() {
 	//WebSocketImplementation()
 	//StartSrv()
 	//input()
-	ForwardProxyStart()
+	//ForwardProxyStart()
 }
 func input() {
 	rd := bufio.NewReader(os.Stdin)
