@@ -18,24 +18,26 @@ func main() {
 	//wg := &sync.WaitGroup{}
 	//wg.Add(1)
 
-	go func() {
-		publishConnection := rmq.OpenConnection("Publisher", "tcp", "127.0.0.1:6379", 1)
+	if false {
+		go func() {
+			publishConnection := rmq.OpenConnection("Publisher", "tcp", "127.0.0.1:6379", 1)
 
-		dataQueue := publishConnection.OpenQueue("dataQueue")
+			dataQueue := publishConnection.OpenQueue("dataQueue")
 
-		//otherQueue := publishConnection.OpenQueue("otherQueue")
+			//otherQueue := publishConnection.OpenQueue("otherQueue")
 
-		for {
-			time.Sleep(time.Millisecond * 2)
-			message, _ := json.Marshal(PayLoad{
-				Header: "header_data",
-				Time:   time.Now().String(),
-			})
+			for {
+				time.Sleep(time.Millisecond * 2)
+				message, _ := json.Marshal(PayLoad{
+					Header: "header_data",
+					Time:   time.Now().String(),
+				})
 
-			dataQueue.PublishBytes(message)
-		}
+				dataQueue.PublishBytes(message)
+			}
 
-	}()
+		}()
+	}
 
 	if true {
 		go func() {
@@ -45,10 +47,10 @@ func main() {
 
 			dataQueue.StartConsuming(100, time.Second)
 
-			for i := 0; i < 20; i++ {
+			for i := 0; i < 10; i++ {
 				name := fmt.Sprintf("consumerID:%d", i)
 				dataQueue.AddConsumerFunc(name, func(delivery rmq.Delivery) {
-					time.Sleep(time.Millisecond * 3)
+					time.Sleep(time.Second * 2)
 					var pd PayLoad
 					if err := json.Unmarshal([]byte(delivery.Payload()), &pd); err != nil {
 						fmt.Println(err)
