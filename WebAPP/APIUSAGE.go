@@ -48,6 +48,14 @@ type Login struct {
 	Password string `form:"password" json:"password bind:required" `
 }
 
+func APITestforPJT() {
+	r := gin.Default()
+	r.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, fmt.Sprint(c.Keys))
+	})
+	r.Run(":80")
+}
+
 //XML, JSON and YAML rendering
 func renderData() {
 	r := gin.Default()

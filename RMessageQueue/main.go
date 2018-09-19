@@ -39,7 +39,7 @@ func main() {
 		}()
 	}
 
-	if true {
+	if false {
 		go func() {
 			consumerConnect := rmq.OpenConnection("Consumer", "tcp", "127.0.0.1:6379", 1)
 
@@ -76,6 +76,8 @@ func main() {
 		stats := connect.CollectStats(queues)
 		fmt.Fprint(writer, stats.GetHtml(layout, "1"))
 	})
+
+
 
 	http.ListenAndServe(":3333", nil)
 	//wg.Wait()

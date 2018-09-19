@@ -8,9 +8,9 @@ import (
 	_ "net/http/pprof"
 	"os"
 
-	_ "github.com/netldds/MyGolang/Hash"
-	"github.com/netldds/MyGolang/Misc"
-	"github.com/netldds/MyGolang/AuthenticationServer"
+	"MyGolang/Misc"
+	"reflect"
+	"MyGolang/DataBaseOperation"
 )
 
 func algorithmStart(name string) {
@@ -71,7 +71,8 @@ func main() {
 	//var i []int=[]int{1,2,3}
 	//Misc.RwMutexExample()
 	//http.ListenAndServe(":80", nil)
-	AuthenticationServer.StartJWT()
+	//AuthenticationServer.StartJWT()
+	DataBaseOperation.RungOrm()
 
 }
 
@@ -85,4 +86,19 @@ func InputLoop() {
 		fmt.Println(str)
 	}
 
+}
+func reflect_example() {
+	method := func(i string) map[string]string {
+		fmt.Println(i)
+		return map[string]string{"id": "id1"}
+	}
+	var v reflect.Value
+	var inf interface{}
+
+	inf = method
+	v = reflect.ValueOf(inf)
+	vs := []reflect.Value{reflect.ValueOf(interface{}("myStrings"))}
+	rvs := v.Call(vs)
+	res := rvs[0].MapIndex(reflect.ValueOf("id")).String()
+	fmt.Println(res)
 }
