@@ -74,8 +74,8 @@ func main() {
 	//AuthenticationServer.StartJWT()
 	DataBaseOperation.RungOrm()
 
-}
 
+}
 func InputLoop() {
 	rd := bufio.NewReader(os.Stdin)
 	for {
