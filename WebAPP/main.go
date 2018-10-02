@@ -32,6 +32,7 @@ func main() {
 	//input()
 	//ForwardProxyStart()
 	//APITestforPJT()
+	DownloadFile()
 }
 func input() {
 	rd := bufio.NewReader(os.Stdin)

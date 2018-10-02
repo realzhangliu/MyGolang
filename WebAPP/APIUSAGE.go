@@ -33,6 +33,8 @@ import (
 
 	"crypto/md5"
 
+	"path"
+
 	"github.com/gin-gonic/autotls"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/sync/errgroup"
@@ -268,6 +270,20 @@ func ServingData() {
 	})
 	//r.Run(":80")
 	r.RunTLS(":80", "server.crt", "server.key")
+}
+func DownloadFile() {
+	fname := "F:/GOProjects/src/github.com/netldds/MyGolang/Misc/TempleExample.go"
+	baseFilename := path.Base(fname)
+	r := gin.Default()
+	r.GET("/", func(c *gin.Context) {
+		//c.Header("Content-Description", "File Transfer")
+		//c.Header("Content-Transfer-Encoding", "binary")
+		//c.Header("Content-Type", "application/octet-stream")
+		c.Header("Content-Disposition", "attachment; filename="+baseFilename)
+		c.File(fname)
+
+	})
+	r.Run(":80")
 }
 
 //HTML rendering
