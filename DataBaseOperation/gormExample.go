@@ -1,12 +1,11 @@
 package DataBaseOperation
 
 import (
-	"dx/taishan/core/db"
-	"dx/taishan/modules/user/models"
 	"fmt"
+	"time"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
-	"time"
 )
 
 type FileStruct struct {
@@ -82,12 +81,12 @@ type User struct {
 
 }
 type UserForProfiles struct {
-	//db.Model
-	Name        string       `form:"name" binding:"exists,alphanum,min=4,max=255" json:"name"`
+	db.Model
+	Name string `form:"name" binding:"exists,alphanum,min=4,max=255" json:"name"`
 	//Password    string       `form:"password" binding:"exists,min=8,max=255" json:"-"`
 	//Email       string       `form:"email" binding:"email" json:"email"`
-	Phone       string       `form:"phone" json:"phone"`
-	Status      int          `form:"-" json:"status"`
+	Phone  string `form:"phone" json:"phone"`
+	Status int    `form:"-" json:"status"`
 	//Profile     UserProfile  `form:"-" gorm:"foreignkey:UserId" json:"profile"`
 	//Company     Company      `form:"-" gorm:"foreignkey:UserId" json:"company"`
 	//Roles       []UserRole   `json:"-" gorm:"many2many:user_user_roles"`
@@ -97,7 +96,7 @@ type UserForProfiles struct {
 	//AreaCode    string      `form:"area_code" json:"area_code"`
 	//Label       []UserLabel `form:"-" json:"label" gorm:"foreignkey:UserId"`
 	//UserId      string     `form:"user_id" binding:"exists" json:"user_id" db:"user_id" gorm:"user_id;size=32;require;unique;index"`
-	Avatar      string     `form:"-" json:"avatar" db:"avatar"`
+	Avatar string `form:"-" json:"avatar" db:"avatar"`
 	//Company     string     `form:"company" json:"company" db:"company"`
 	//Title       string     `form:"title" json:"title" db:"title"`
 	//Address1    string     `form:"address1" json:"address1" db:"address1"`

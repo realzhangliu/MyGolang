@@ -5,12 +5,10 @@ import (
 	"math/rand"
 
 	"bufio"
-	_ "net/http/pprof"
 	"os"
-
-	"MyGolang/Misc"
 	"reflect"
-	"MyGolang/DataBaseOperation"
+
+	"github.com/netldds/MyGolang/Misc"
 )
 
 func algorithmStart(name string) {
@@ -34,46 +32,7 @@ func algorithmStart(name string) {
 
 }
 
-type Recurlyservers struct {
-	JsonName string `json:"json_name"`
-}
-type II struct {
-	index int
-}
-
-func calc() func() func() func() {
-	fmt.Println("connect")
-	return func() func() func() {
-		fmt.Println("disconnect")
-		return func() func() {
-			fmt.Println("hahaha")
-			return func() {
-				fmt.Println("lalala")
-			}
-		}
-	}
-}
-
 func main() {
-	defer func() {
-		fmt.Print("\n Processing has done!")
-	}()
-	//RunMatrixMutiply()
-	//MyUploadServer.Start()
-	//Hash.NewHash()
-	//DataBaseOperation.MysqlExample()
-	//DataBaseOperation.Sqllite3Example()
-	//AtomicCounterExample()
-	//MutexSample()
-	//Misc.SignalExample()
-	//Misc.XormExample()
-	//Misc.TimeExample()
-	//var i []int=[]int{1,2,3}
-	//Misc.RwMutexExample()
-	//http.ListenAndServe(":80", nil)
-	//AuthenticationServer.StartJWT()
-	DataBaseOperation.RungOrm()
-
 
 }
 func InputLoop() {
