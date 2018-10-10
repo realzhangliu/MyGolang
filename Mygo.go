@@ -9,8 +9,10 @@ import (
 	"os"
 
 	"MyGolang/Misc"
+	"io/ioutil"
+	"net/url"
+	"path"
 	"reflect"
-	"MyGolang/DataBaseOperation"
 )
 
 func algorithmStart(name string) {
@@ -72,10 +74,31 @@ func main() {
 	//Misc.RwMutexExample()
 	//http.ListenAndServe(":80", nil)
 	//AuthenticationServer.StartJWT()
-	DataBaseOperation.RungOrm()
+	//DataBaseOperation.RungOrm()
+	//Misc.RunProcess()
+	//out,err:=sh.Command("printenv").Output()
 
-
+	filename := "fc3347e6f25442bd893882123fb703be_DAM_2885804852258673_出图.png"
+	filenameE := url.PathEscape(filename)
+	filedir := "/home/dx"
+	fullpath := path.Join(filedir, filenameE)
+	//f, err := os.Create(fullpath)
+	err := ioutil.WriteFile(fullpath, []byte("aaaa"), os.ModePerm)
+	//_, err = f.Write([]byte("abc"))
+	//f.Close()
+	fmt.Println(err)
 }
+
+type MsgToServer struct {
+	QueueName string      `json:"queue_name"`
+	Payload   interface{} `json:"payload"`
+}
+
+type TGAPayLoad struct {
+	FilePath string `json:"file_path"`
+	Status   int    `json:"status"` //failure:-1
+}
+
 func InputLoop() {
 	rd := bufio.NewReader(os.Stdin)
 	for {

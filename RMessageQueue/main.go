@@ -4,82 +4,61 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/adjust/rmq"
-	"net/http"
+	"io/ioutil"
+	"path"
 	"time"
 )
 
-type PayLoad struct {
-	Header string `json:"header"`
-	Time   string `json:"claim"`
+type Payload struct {
+	FilePath  string `json:"file_path"`
+	OutputDir string `json:"output_dir"`
 }
 
+var directory = "/home/dx/GoWorkBench/src/thumbnailerDEV/testdata2"
+var filename []string
+
 func main() {
+	findAllFiles(&filename)
 
-	//wg := &sync.WaitGroup{}
-	//wg.Add(1)
-
-	if false {
+	if true {
 		go func() {
-			publishConnection := rmq.OpenConnection("Publisher", "tcp", "127.0.0.1:6379", 1)
+			connection := rmq.OpenConnection("Publisher", "tcp", "127.0.0.1:6379", 1)
 
-			dataQueue := publishConnection.OpenQueue("dataQueue")
+			TGAQueue := connection.OpenQueue("tga_queue")
 
-			//otherQueue := publishConnection.OpenQueue("otherQueue")
-
-			for {
-				time.Sleep(time.Millisecond * 2)
-				message, _ := json.Marshal(PayLoad{
-					Header: "header_data",
-					Time:   time.Now().String(),
-				})
-
-				dataQueue.PublishBytes(message)
+			for _, i := range filename {
+				data, _ := json.Marshal(Payload{FilePath: i, OutputDir: path.Dir(i)})
+				TGAQueue.PublishBytes(data)
 			}
 
 		}()
 	}
-
 	if false {
 		go func() {
-			consumerConnect := rmq.OpenConnection("Consumer", "tcp", "127.0.0.1:6379", 1)
-
-			dataQueue := consumerConnect.OpenQueue("dataQueue")
-
-			dataQueue.StartConsuming(100, time.Second)
-
+			connection := rmq.OpenConnection("Consumer", "tcp", "127.0.0.1:6379", 1)
+			tgaqueue := connection.OpenQueue("tga_queue")
+			tgaqueue.StartConsuming(20, time.Second)
 			for i := 0; i < 10; i++ {
-				name := fmt.Sprintf("consumerID:%d", i)
-				dataQueue.AddConsumerFunc(name, func(delivery rmq.Delivery) {
-					time.Sleep(time.Second * 2)
-					var pd PayLoad
-					if err := json.Unmarshal([]byte(delivery.Payload()), &pd); err != nil {
-						fmt.Println(err)
-						delivery.Reject()
-						return
-					}
-					fmt.Println(pd)
+				tgaqueue.AddConsumerFunc(fmt.Sprintf("consumerID%d", i), func(delivery rmq.Delivery) {
+					var py Payload
+					json.Unmarshal([]byte(delivery.Payload()), &py)
+					fmt.Println(py)
 					delivery.Ack()
-
 				})
-			}
 
+			}
 		}()
 	}
+	select {}
+}
+func findAllFiles(fn *[]string) {
 
-	connect := rmq.OpenConnection("handler", "tcp", "127.0.0.1:6379", 1)
-
-	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-		layout := request.FormValue("layout")
-		//refresh := request.FormValue("refresh")
-
-		queues := connect.GetOpenQueues()
-		stats := connect.CollectStats(queues)
-		fmt.Fprint(writer, stats.GetHtml(layout, "1"))
-	})
-
-
-
-	http.ListenAndServe(":3333", nil)
-	//wg.Wait()
-
+	finfo, err := ioutil.ReadDir(directory)
+	if err != nil {
+		return
+	}
+	for _, v := range finfo {
+		//fmt.Println(v.Name())
+		*fn = append(*fn, path.Join(directory, v.Name()))
+	}
 }
