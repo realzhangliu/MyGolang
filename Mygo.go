@@ -5,7 +5,6 @@ import (
 	"math/rand"
 
 	"bufio"
-	_ "net/http/pprof"
 	"os"
 
 	"MyGolang/Misc"
@@ -36,69 +35,9 @@ func algorithmStart(name string) {
 
 }
 
-type Recurlyservers struct {
-	JsonName string `json:"json_name"`
-}
-type II struct {
-	index int
-}
-
-func calc() func() func() func() {
-	fmt.Println("connect")
-	return func() func() func() {
-		fmt.Println("disconnect")
-		return func() func() {
-			fmt.Println("hahaha")
-			return func() {
-				fmt.Println("lalala")
-			}
-		}
-	}
-}
-
 func main() {
-	defer func() {
-		fmt.Print("\n Processing has done!")
-	}()
-	//RunMatrixMutiply()
-	//MyUploadServer.Start()
-	//Hash.NewHash()
-	//DataBaseOperation.MysqlExample()
-	//DataBaseOperation.Sqllite3Example()
-	//AtomicCounterExample()
-	//MutexSample()
-	//Misc.SignalExample()
-	//Misc.XormExample()
-	//Misc.TimeExample()
-	//var i []int=[]int{1,2,3}
-	//Misc.RwMutexExample()
-	//http.ListenAndServe(":80", nil)
-	//AuthenticationServer.StartJWT()
-	//DataBaseOperation.RungOrm()
-	//Misc.RunProcess()
-	//out,err:=sh.Command("printenv").Output()
 
-	filename := "fc3347e6f25442bd893882123fb703be_DAM_2885804852258673_出图.png"
-	filenameE := url.PathEscape(filename)
-	filedir := "/home/dx"
-	fullpath := path.Join(filedir, filenameE)
-	//f, err := os.Create(fullpath)
-	err := ioutil.WriteFile(fullpath, []byte("aaaa"), os.ModePerm)
-	//_, err = f.Write([]byte("abc"))
-	//f.Close()
-	fmt.Println(err)
 }
-
-type MsgToServer struct {
-	QueueName string      `json:"queue_name"`
-	Payload   interface{} `json:"payload"`
-}
-
-type TGAPayLoad struct {
-	FilePath string `json:"file_path"`
-	Status   int    `json:"status"` //failure:-1
-}
-
 func InputLoop() {
 	rd := bufio.NewReader(os.Stdin)
 	for {
