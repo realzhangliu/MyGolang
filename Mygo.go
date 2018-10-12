@@ -32,15 +32,21 @@ func algorithmStart(name string) {
 
 }
 
-type TData struct {
-	Name string
-}
-
-func (t *TData) String() string {
-	return t.Name + " Strings."
+type Order struct {
+	OrdId      int
+	customerId int
 }
 
 func main() {
+
+	v := make(map[string]interface{})
+	v["a"] = func() {
+		fmt.Println("lalala")
+	}
+	v["b"]=2
+	vr := reflect.ValueOf(&v)
+	fmt.Println(vr.Elem().MapIndex(vr.Elem().MapKeys()[1]).Elem())
+	fmt.Println(vr.Elem().MapIndex(vr.Elem().MapKeys()[1]))
 }
 func InputLoop() {
 	rd := bufio.NewReader(os.Stdin)
