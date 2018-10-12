@@ -5,6 +5,7 @@ import (
 	"dx/taishan/modules/user/models"
 	"time"
 )
+
 type FileStruct struct {
 	db.Model
 	ContainerId string `json:"container_id" db:"container_id"`
@@ -123,6 +124,7 @@ type UserWebApp struct {
 
 var userWebApp UserWebApp
 var userWebApps []UserWebApp
+
 type WebApp struct {
 	db.Model
 	Name        string    `json:"name" form:"name" db:"name"`
@@ -138,3 +140,17 @@ type WebApp struct {
 
 var webApp WebApp
 var webApps []WebApp
+
+type Container struct {
+	db.Model
+	Name        string            `json:"name" form:"name"gorm:"name"`
+	Description string            `json:"description" form:"description"gorm:"description"`
+	Cover       string            `json:"cover" form:"cover" gorm:"cover"`
+	CreatorId   string            `json:"creator_id" form:"creator_id"`
+	Status      int               `json:"status" form:"status"gorm:"status"`
+	Permission  int               `json:"permission" form:"permission"gorm:"permission"`
+	Members     []ContainerMember `json:"-"`
+	Lvl         string            `gorm:"lvl"`
+}
+
+var containers []Container

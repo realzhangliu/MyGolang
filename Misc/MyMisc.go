@@ -2,8 +2,7 @@ package Misc
 
 import (
 	"fmt"
-
-	matrix "github.com/netldds/MyGolang/Matrix"
+	"MyGolang/Matrix"
 )
 
 type MyError struct {

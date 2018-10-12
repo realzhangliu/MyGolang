@@ -8,9 +8,6 @@ import (
 	"os"
 
 	"MyGolang/Misc"
-	"io/ioutil"
-	"net/url"
-	"path"
 	"reflect"
 )
 
@@ -35,8 +32,15 @@ func algorithmStart(name string) {
 
 }
 
-func main() {
+type TData struct {
+	Name string
+}
 
+func (t *TData) String() string {
+	return t.Name + " Strings."
+}
+
+func main() {
 }
 func InputLoop() {
 	rd := bufio.NewReader(os.Stdin)
