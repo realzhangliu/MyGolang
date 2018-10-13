@@ -2,35 +2,12 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 
 	"bufio"
 	"os"
 
-	"MyGolang/Misc"
 	"reflect"
 )
-
-func algorithmStart(name string) {
-
-	var a []int
-	for i := 0; i < 100; i++ {
-		a = append(a, rand.Intn(100))
-	}
-	switch name {
-	case "QuickSort":
-		Misc.QuickSort(a, 0, len(a)-1)
-		fmt.Printf("Sorted array is :%v\n", a)
-
-	case "MergeSort":
-		Misc.MergeSort(a, 0, len(a)-1)
-		fmt.Printf("Sorted array is :%v\n", a)
-
-	default:
-		fmt.Println("Correct name was expected.")
-	}
-
-}
 
 type Order struct {
 	OrdId      int
@@ -43,7 +20,7 @@ func main() {
 	v["a"] = func() {
 		fmt.Println("lalala")
 	}
-	v["b"]=2
+	v["b"] = 2
 	vr := reflect.ValueOf(&v)
 	fmt.Println(vr.Elem().MapIndex(vr.Elem().MapKeys()[1]).Elem())
 	fmt.Println(vr.Elem().MapIndex(vr.Elem().MapKeys()[1]))
