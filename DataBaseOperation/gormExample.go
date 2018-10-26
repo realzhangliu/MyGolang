@@ -45,6 +45,7 @@ func Webapp(db *gorm.DB) {
 	//}
 
 	//db.Table("user_web_apps").Where("due_time >= ? and user_id = ? and app_id = ? ", time.Now().Local().String(), "e28ff0cdab2a482b939ac3dc154df1ad",db.Table("web_apps").Select("id").Where("app_key = ?","Watermark").SubQuery()).First(&userWebApp)
+	db.Table("projects").Select("creator_id,owner_id").Where("creator_id = ?", "0d732263d5ad43ca9430ccaf9031ca94").Update(map[string]interface{}{"creator_id": "abc", "owner_id": "abc"})
 
 	//fmt.Println(webApp)
 	//fmt.Println(userWebApp)
@@ -61,18 +62,12 @@ func Webapp(db *gorm.DB) {
 	//row.Scan(&id, &file_state, &thumbnail_state)
 	//fmt.Printf("%v\n%v\n%v\n", id, file_state, thumbnail_state)
 
-	dbSearch := db.Table("containers").Joins("JOIN container_members ON container_members.container_id = containers.id AND "+"container_members.owner_id = ? AND container_members.deleted_at IS NULL"+" AND containers.status = 0", "e28ff0cdab2a482b939ac3dc154df1ad")
-
-	dbSearch = db.Table("containers").Where("containers.id in (?) AND containers.status = 0 ", db.Table("container_members").Select("container_id").Where("owner_id = ? AND deleted_at IS NULL", "e28ff0cdab2a482b939ac3dc154df1ad").QueryExpr())
-
-	dbSearch1 := dbSearch.Select("*,'1' lvl").Where("containers.name = ?", "女一号")
-	dbSearch2 := dbSearch.Select("*,'2' lvl").Where("containers.name LIKE ?", "女一号_%")
-	dbSearch3 := dbSearch.Select("*,'3' lvl").Where("containers.name LIKE ?", "_%女一号%_")
-	fmt.Printf("%p\n%p\n%p\n", dbSearch1, dbSearch2, dbSearch3)
-
-	dbSearch1 = dbSearch1.Joins("UNION ?", dbSearch2.QueryExpr())
-
-	dbSearch1.Find(&containers)
+	projectMember.Id="id1"
+	projectMember.Status = 1
+	projectMember.ProjectId = "projectID"
+	projectMember.OwnerId = "OwnerID"
+	projectMember.MemberType = 1
+	fmt.Println(db.NewRecord(&projectMember))
 	//dbSearch1 = dbSearch1.Joins("UNION ?", dbSearch3.SubQuery())
 	//dbSearch1=db.Table("containers").Select("*")
 
