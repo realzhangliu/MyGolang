@@ -1,19 +1,17 @@
 package main
 
 import (
+	"MyGolang/Cexamples"
+	"MyGolang/Misc"
 	"bufio"
 	"fmt"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
+	"math/rand"
 	"os"
 	"reflect"
-	"math/rand"
-	"MyGolang/Misc"
-	"MyGolang/DataBaseOperation"
 )
-
-
 
 const (
 	file1 = "6.9MB.jpg"
@@ -22,10 +20,17 @@ const (
 	file4 = "3.7MB.tga"
 	file5 = "13.4MB.pdf"
 )
-func main() {
-	//DataBaseOperation.RungOrm()
-	DataBaseOperation.RunnerRedis()
 
+func Cf(c ...string) {
+	for _, v := range c {
+		fmt.Println(v)
+	}
+}
+
+func main() {
+
+	i3:=Cexamples.Random()
+	fmt.Println(i3)
 }
 func InputLoop() {
 	rd := bufio.NewReader(os.Stdin)
@@ -44,11 +49,9 @@ func reflect_example() {
 		return map[string]string{"id": "id1"}
 	}
 	var v reflect.Value
-	var inf interface{}
 
-	inf = method
-	v = reflect.ValueOf(inf)
-	vs := []reflect.Value{reflect.ValueOf(interface{}("myStrings"))}
+	v = reflect.ValueOf(method)
+	vs := []reflect.Value{reflect.ValueOf("myStrings")}
 	rvs := v.Call(vs)
 	res := rvs[0].MapIndex(reflect.ValueOf("id")).String()
 	fmt.Println(res)
