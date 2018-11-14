@@ -1,7 +1,6 @@
 package main
 
 import (
-	"MyGolang/Cexamples"
 	"MyGolang/Misc"
 	"bufio"
 	"fmt"
@@ -21,16 +20,7 @@ const (
 	file5 = "13.4MB.pdf"
 )
 
-func Cf(c ...string) {
-	for _, v := range c {
-		fmt.Println(v)
-	}
-}
-
 func main() {
-
-	i3:=Cexamples.Random()
-	fmt.Println(i3)
 }
 func InputLoop() {
 	rd := bufio.NewReader(os.Stdin)
