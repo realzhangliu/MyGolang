@@ -23,14 +23,11 @@ func main() {
 	if true {
 		go func() {
 			connection := rmq.OpenConnection("Publisher", "tcp", "127.0.0.1:6379", 1)
-
 			TGAQueue := connection.OpenQueue("tga_queue")
-
 			for _, i := range filename {
 				data, _ := json.Marshal(Payload{FilePath: i, OutputDir: path.Dir(i)})
 				TGAQueue.PublishBytes(data)
 			}
-
 		}()
 	}
 	if false {
