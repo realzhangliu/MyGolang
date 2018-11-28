@@ -50,7 +50,7 @@ type ContainerMember struct {
 	Owner       models.User `json:"owner"`
 }
 
-var CMS []ContainerMember
+var containerMembers []ContainerMember
 
 type UserProfile struct {
 	db.Model
@@ -191,3 +191,4 @@ type ProjectMember struct {
 	Roles               []MemberRole         `json:"roles" gorm:"many2many:project_member_member_roles"`
 }
 var projectMember ProjectMember
+var projectMembers []ProjectMember

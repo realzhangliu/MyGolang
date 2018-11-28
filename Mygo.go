@@ -21,6 +21,18 @@ const (
 )
 
 func main() {
+
+
+}
+
+type ImplementationMe interface {
+	gogo()
+}
+
+func createSchema(target interface{}) {
+	if v, ok := target.(ImplementationMe); ok {
+		v.gogo()
+	}
 }
 func InputLoop() {
 	rd := bufio.NewReader(os.Stdin)

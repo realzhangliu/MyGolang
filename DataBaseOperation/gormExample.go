@@ -26,7 +26,7 @@ func RungOrm() {
 	//var CMdata []ContainerMember
 	//var RAWfiles []RawFile
 	//userId := "2fd8584564ad47798ac4d23cf4a03ea1"
-	db, err := gorm.Open("mysql", "root:123@/taishan_dev?charset=utf8&parseTime=True&loc=Local")
+	db, err := gorm.Open("mysql", "root:123@/taishan_dev2?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -45,7 +45,7 @@ func Webapp(db *gorm.DB) {
 	//}
 
 	//db.Table("user_web_apps").Where("due_time >= ? and user_id = ? and app_id = ? ", time.Now().Local().String(), "e28ff0cdab2a482b939ac3dc154df1ad",db.Table("web_apps").Select("id").Where("app_key = ?","Watermark").SubQuery()).First(&userWebApp)
-	db.Table("projects").Select("creator_id,owner_id").Where("creator_id = ?", "0d732263d5ad43ca9430ccaf9031ca94").Update(map[string]interface{}{"creator_id": "abc", "owner_id": "abc"})
+	//db.Table("projects").Select("creator_id,owner_id").Where("creator_id = ?", "0d732263d5ad43ca9430ccaf9031ca94").Update(map[string]interface{}{"creator_id": "abc", "owner_id": "abc"})
 
 	//fmt.Println(webApp)
 	//fmt.Println(userWebApp)
@@ -62,12 +62,12 @@ func Webapp(db *gorm.DB) {
 	//row.Scan(&id, &file_state, &thumbnail_state)
 	//fmt.Printf("%v\n%v\n%v\n", id, file_state, thumbnail_state)
 
-	projectMember.Id="id1"
-	projectMember.Status = 1
-	projectMember.ProjectId = "projectID"
-	projectMember.OwnerId = "OwnerID"
-	projectMember.MemberType = 1
-	fmt.Println(db.NewRecord(&projectMember))
+	//projectMember.Id="id1"
+	//projectMember.Status = 1
+	//projectMember.ProjectId = "projectID"
+	//projectMember.OwnerId = "OwnerID"
+	//projectMember.MemberType = 1
+	//fmt.Println(db.NewRecord(&projectMember))
 	//dbSearch1 = dbSearch1.Joins("UNION ?", dbSearch3.SubQuery())
 	//dbSearch1=db.Table("containers").Select("*")
 
@@ -88,12 +88,19 @@ func Webapp(db *gorm.DB) {
 
 	//db.Raw("(select *,'1' lvl  from containers where containers.name = ?) UNION  (select *,'2' lvl  from containers where containers.name LIKE ?) UNION  (select *,'3' lvl  from containers where containers.name LIKE ?) ORDER BY lvl", "女一号", "女一号_%","%_女一号_%").Scan(&containers)
 
-	fmt.Println(containers)
+	//fmt.Println(containers)
+	var num int
+	//db.Table("oauths").Where("user_id = ? and delete_at not null ", "1fcf019ec96c4ba1ac88bfc408febd97").Count(&num)
 
+	db.Where("owner_id = ?", "63a40b5f320f44ccb6639a44b0ce8232").Find(&containerMembers)
+	for _, v := range projectMembers {
+		fmt.Println(v)
+	}
+	fmt.Println(num)
 }
 func FuncUser(db *gorm.DB) {
-	db.Table("container_members").Where("container_id =? and member_type =?", "4fc637a53d2242fdbfed3e3195906175", 2).Not("deleted_at", nil).Find(&CMS)
-	fmt.Println(CMS)
+	//db.Table("container_members").Where("container_id =? and member_type =?", "4fc637a53d2242fdbfed3e3195906175", 2).Not("deleted_at", nil).Find(&containerMembers)
+	//fmt.Println(CMS)
 	//db.Where("owner_id = ? AND member_type=? ", userId, 1).Find(&CMdata)
 	//fmt.Println(CMdata)
 
