@@ -4,15 +4,12 @@ import (
 	"MyGolang/Misc"
 	"bufio"
 	"fmt"
-	"github.com/adjust/rmq"
-	"github.com/gin-gonic/gin"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
 	"math/rand"
 	"os"
 	"reflect"
-	"time"
 )
 
 const (
@@ -23,7 +20,15 @@ const (
 	file5 = "13.4MB.pdf"
 )
 
+func testify(str *string) {
+	str1 := "123"
+	*str = str1
+}
+
+const NAME = 111
+
 func main() {
+
 
 }
 
