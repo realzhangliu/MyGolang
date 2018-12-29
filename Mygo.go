@@ -27,9 +27,18 @@ func testify(str *string) {
 
 const NAME = 111
 
+type AStruct struct {
+	A []byte
+}
+
 func main() {
-
-
+	var as []AStruct
+	var av AStruct
+	av.A = []byte("AAA")
+	as = append(as, av)
+	fmt.Println(as)
+	av.A = []byte("BBB")
+	fmt.Println(string(as[0].A))
 }
 
 type ImplementationMe interface {
