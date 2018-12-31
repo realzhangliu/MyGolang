@@ -7,6 +7,8 @@ import (
 	"os"
 
 	"reflect"
+
+	"github.com/tus/tusd"
 )
 
 type Order struct {
@@ -24,6 +26,9 @@ func main() {
 	vr := reflect.ValueOf(&v)
 	fmt.Println(vr.Elem().MapIndex(vr.Elem().MapKeys()[1]).Elem())
 	fmt.Println(vr.Elem().MapIndex(vr.Elem().MapKeys()[1]))
+
+	handler ,_:= tusd.NewHandler(tusd.Config{})
+
 }
 func InputLoop() {
 	rd := bufio.NewReader(os.Stdin)
