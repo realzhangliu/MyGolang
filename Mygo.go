@@ -3,13 +3,17 @@ package main
 import (
 	"MyGolang/Misc"
 	"bufio"
+	"database/sql"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
 	"math/rand"
+	"net"
 	"os"
 	"reflect"
+	"os/signal"
 )
 
 const (
@@ -20,27 +24,31 @@ const (
 	file5 = "13.4MB.pdf"
 )
 
-func testify(str *string) {
-	str1 := "123"
-	*str = str1
-}
-
-const NAME = 111
-
 func main() {
+	var db *sql.DB
+	func() {
+		return
+		db, err := sql.Open("mysql", "root:123@/taishan_dev2")
+		if err != nil {
+			fmt.Println(err)
+		}
+		err = db.Ping()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}()
 
+	//server
+	func() {
+		ln, _ := net.Listen("unix", "/tmp/go.sock")
+	}()
+	//client
+	func() {
 
+	}()
+	//db.Close()
 }
 
-type ImplementationMe interface {
-	gogo()
-}
-
-func createSchema(target interface{}) {
-	if v, ok := target.(ImplementationMe); ok {
-		v.gogo()
-	}
-}
 func InputLoop() {
 	rd := bufio.NewReader(os.Stdin)
 	for {
@@ -83,5 +91,39 @@ func algorithmStart(name string) {
 	default:
 		fmt.Println("Correct name was expected.")
 	}
+
+}
+func tcp_test() {
+	//server
+	go func() {
+		net, _ := net.Listen("tcp", ":6666")
+		fmt.Println(net.Addr())
+		for {
+			conn, err := net.Accept()
+			fmt.Println(" server conn accepted")
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			go func() {
+				rd := bufio.NewReader(conn)
+				fmt.Printf("server local addr  %v\n server remote addr %v \n", conn.LocalAddr(), conn.RemoteAddr())
+				for {
+					str, err := rd.ReadString('\n')
+					if err != nil {
+						fmt.Println(err)
+						break
+					}
+					fmt.Println(str)
+				}
+			}()
+		}
+	}()
+	//client
+	addr, _ := net.ResolveTCPAddr("tcp", "127.0.0.1:6666")
+	conn, _ := net.DialTCP("tcp", nil, addr)
+	fmt.Printf("client local addr %v \n client remote addr %v \n ", conn.LocalAddr(), conn.RemoteAddr())
+	conn2 := conn
+	fmt.Printf("client local addr %v \n client remote addr %v \n ", conn2.LocalAddr(), conn2.RemoteAddr())
 
 }
