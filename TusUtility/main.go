@@ -77,7 +77,6 @@ func (b *Bullets) Shot(name string) {
 
 		resp, err := clinet.Do(req)
 
-		clinet.Transport.RoundTrip()
 		//defer resp.Body.Close()
 		if err != nil {
 			fmt.Println(err)
