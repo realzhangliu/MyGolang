@@ -77,7 +77,7 @@ func Start() {
 	http.HandleFunc("/upload", uploadHandler)
 	http.HandleFunc("logout", logout)
 	http.ListenAndServe(":80", nil)
-	fmt.Println("Server listing at: 127.0.0.1:80")
+	fmt.Println("NetWork listing at: 127.0.0.1:80")
 	//http.ListenAndServe(":9090", http.FileServer(http.Dir(".")))
 
 }

@@ -487,7 +487,7 @@ func GracefulShutdown() {
 	router := gin.Default()
 	router.GET("/", func(c *gin.Context) {
 		time.Sleep(5 * time.Second)
-		c.String(http.StatusOK, "Welcome Gin Server.")
+		c.String(http.StatusOK, "Welcome Gin NetWork.")
 	})
 	srv := &http.Server{
 		Addr:    ":80",
@@ -504,14 +504,14 @@ func GracefulShutdown() {
 	signal.Notify(quit, os.Interrupt, os.Kill)
 	//把服务跑在GOROUTINE里面，主线程完成退出前的操作。
 	<-quit
-	log.Println("Shutdown Server...")
+	log.Println("Shutdown NetWork...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 6*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatal("Server Shutdown:", err)
+		log.Fatal("NetWork Shutdown:", err)
 	}
-	log.Println("Server exiting")
+	log.Println("NetWork exiting")
 
 }
 
