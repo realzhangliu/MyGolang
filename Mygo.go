@@ -12,7 +12,6 @@ import (
 	"net"
 	"os"
 	"reflect"
-	"github.com/gin-gonic/gin"
 )
 
 const (
@@ -25,8 +24,7 @@ const (
 
 func main() {
 
-	gin.HandlerFunc()
-
+	
 }
 
 func InputLoop() {
