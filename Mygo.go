@@ -3,7 +3,6 @@ package main
 import (
 	"MyGolang/Misc"
 	"bufio"
-	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	_ "image/gif"
@@ -13,7 +12,7 @@ import (
 	"net"
 	"os"
 	"reflect"
-	"os/signal"
+	"github.com/gin-gonic/gin"
 )
 
 const (
@@ -25,28 +24,9 @@ const (
 )
 
 func main() {
-	var db *sql.DB
-	func() {
-		return
-		db, err := sql.Open("mysql", "root:123@/taishan_dev2")
-		if err != nil {
-			fmt.Println(err)
-		}
-		err = db.Ping()
-		if err != nil {
-			fmt.Println(err)
-		}
-	}()
 
-	//server
-	func() {
-		ln, _ := net.Listen("unix", "/tmp/go.sock")
-	}()
-	//client
-	func() {
+	gin.HandlerFunc()
 
-	}()
-	//db.Close()
 }
 
 func InputLoop() {
