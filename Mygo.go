@@ -22,9 +22,10 @@ const (
 	file5 = "13.4MB.pdf"
 )
 
+
 func main() {
 
-	
+
 }
 
 func InputLoop() {
