@@ -7,28 +7,22 @@ import (
 	"os"
 
 	"reflect"
-
-	"github.com/tus/tusd"
 )
 
 type Order struct {
 	OrdId      int
 	customerId int
 }
+type GG interface {
+	gg() string
+}
 
+func (order *Order) gg() string {
+	return "gg"
+}
 func main() {
-
-	v := make(map[string]interface{})
-	v["a"] = func() {
-		fmt.Println("lalala")
-	}
-	v["b"] = 2
-	vr := reflect.ValueOf(&v)
-	fmt.Println(vr.Elem().MapIndex(vr.Elem().MapKeys()[1]).Elem())
-	fmt.Println(vr.Elem().MapIndex(vr.Elem().MapKeys()[1]))
-
-	handler ,_:= tusd.NewHandler(tusd.Config{})
-
+	g1 := &Order{}
+	fmt.Println(g1.gg())
 }
 func InputLoop() {
 	rd := bufio.NewReader(os.Stdin)
