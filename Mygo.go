@@ -3,15 +3,19 @@ package main
 import (
 	"MyGolang/Misc"
 	"bufio"
+	"flag"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/golang/glog"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
+	"io/ioutil"
 	"math/rand"
 	"net"
 	"os"
 	"reflect"
+	"time"
 )
 
 const (
@@ -22,9 +26,18 @@ const (
 	file5 = "13.4MB.pdf"
 )
 
+var counterPool = make(map[string]time.Time)
+
+const rootpath = "/home/dx/GoWorkBench/src/dx/taishan/data/comment_files"
 
 func main() {
+	flag.Set("logtostderr", "true")
+	flag.Parse()
 
+	for i := 0; i < 3; i++ {
+		dir1, _ := ioutil.TempDir("", "XXX")
+		glog.Info(dir1)
+	}
 
 }
 
