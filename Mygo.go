@@ -10,7 +10,6 @@ import (
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
-	"io/ioutil"
 	"math/rand"
 	"net"
 	"os"
@@ -34,10 +33,7 @@ func main() {
 	flag.Set("logtostderr", "true")
 	flag.Parse()
 
-	for i := 0; i < 3; i++ {
-		dir1, _ := ioutil.TempDir("", "XXX")
-		glog.Info(dir1)
-	}
+	glog.Infof("%5d/%5d",1111,2222)
 
 }
 
