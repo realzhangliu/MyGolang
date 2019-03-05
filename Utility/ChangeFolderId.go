@@ -51,56 +51,50 @@ func connectDB() *gorm.DB {
 
 func main() {
 	db := connectDB()
-
-	//var ids []string
-	var attachments []Attachment
-	db.Find(&attachments)
 	var comments []Comment
-	db.Find(&comments)
-	glog.Info("Sum of Attachmetns:", len(attachments))
-	for index, attachment := range attachments {
-		row, err := db.Model(&Comment{}).Where("id = ? and deleted_at is null", attachment.ParentId).Select("id,viewpoint_id").Rows()
-		if err != nil {
-			glog.Info(err)
-		}
-		for row.Next() {
-			var Id string
-			var ViewpointId string
-			err := row.Scan(&Id, &ViewpointId)
-			if err != nil {
-				glog.Info(err)
-			}
-			var viewpoint Viewpoint
-			if db.Where("id = ?", ViewpointId).First(&viewpoint).RecordNotFound() {
-				glog.Warning(ViewpointId, " Viewpoint RecoreNotFound continue.")
-				if !db.Table("project_files").Where("id = ?", ViewpointId).RecordNotFound() {
-					glog.Infof("%s was found in project_files", ViewpointId)
-				}
+	db.Order("created_at asc").Find(&comments)
+	glog.Info("Sum of Comments:", len(comments))
+	for index, comment := range comments {
+		//find record in table viewpoints
+		var viewpoint Viewpoint
+		if db.Where("id = ?", comment.ViewpointId).First(&viewpoint).RecordNotFound() {
+			glog.Warningf("viewpointId %s was not found in viewpoints.continue.", comment.ViewpointId)
+			//whether filed of viewpoint_id was updated to file_id
+			if !db.Table("project_files").Where("id = ?", comment.ViewpointId).RecordNotFound() {
+				glog.Infof("viewpointId %s was found in project_files %d", comment.ViewpointId, index+1)
 				continue
+			} else {
+				glog.Infof("viewpointId %s was not found in project_files,exit.", comment.ViewpointId)
+				return
 			}
-			//rename
-			if err := Rename(viewpoint.ProjectId, ViewpointId, viewpoint.ProjectFileId); err != nil {
-				glog.Warning(path2.Join(CommentPath, viewpoint.ProjectId, ViewpointId), "  not found.")
+		}
+		//rename & check attachments
+		var attachment Attachment
+		if !db.Where("parent_id = ?", comment.Id).First(&attachment).RecordNotFound() {
+			// attachment existed & modify corresponding folder
+			if err := Rename(viewpoint.ProjectId, comment.ViewpointId, viewpoint.ProjectFileId); err != nil {
+				glog.Warning(path2.Join(CommentPath, viewpoint.ProjectId, comment.ViewpointId), " was not found.")
+				//whether had alread been modified.
 				newFilePath := path2.Join(CommentPath, viewpoint.ProjectId, viewpoint.ProjectFileId)
 				if _, err := os.Open(newFilePath); err != nil && os.IsNotExist(err) {
-					glog.Info(newFilePath, " not found.")
+					glog.Infof(" %s was not found %d ,exit.", newFilePath, index+1)
 					return
 				} else {
 					//modirying in previous round
-					glog.Info(newFilePath, " was found.")
-
+					glog.Infof(" %s was  found %d", newFilePath, index+1)
 				}
+			} else {
+				glog.Infof("%s Modify Folder Name:%s -> %s", comment.Id, comment.ViewpointId, viewpoint.ProjectFileId)
 			}
-			glog.Infof("%s Modify DIR Name:%s -> %s", Id, ViewpointId, viewpoint.ProjectFileId)
-
-			if db.Table("comments").Where("id = ?", Id).Update("viewpoint_id", viewpoint.ProjectFileId).RecordNotFound() {
-				glog.Fatal("fail to update viewpoint id in comments")
-				return
-			}
-			glog.Infof("%s Update viewpoint_id %s -> %s", Id, ViewpointId, viewpoint.ProjectFileId)
-
 		}
-		glog.Infof("%3d/%-3d", index+1, len(attachments))
+
+		if db.Table("comments").Where("id = ?", comment.Id).Update("viewpoint_id", viewpoint.ProjectFileId).RecordNotFound() {
+			glog.Fatal("fail to update viewpoint id in comments")
+			return
+		}
+		glog.Infof("%s Update viewpoint_id %s -> %s", comment.Id, comment.ViewpointId, viewpoint.ProjectFileId)
+
+		glog.Infof("%3d/%-3d", index+1, len(comments))
 	}
 
 }
