@@ -18,20 +18,20 @@ func connectDB() *gorm.DB {
 	var dbName string
 	var user, host, pwd string
 	var port int
-	flag.StringVar(&dbName, "db", "taishan_dev", "-db taishan_dev2")
+	flag.StringVar(&dbName, "db", "taishan_dev2", "-db taishan_dev2")
 	flag.StringVar(&user, "u", "root", "-u root")
 	flag.StringVar(&pwd, "p", "123", "-p 123")
 	flag.IntVar(&port, "P", 3306, "-P 3306")
 	flag.StringVar(&host, "h", "192.168.99.102", "-h localhost")
-	flag.StringVar(&CommentPath, "d", "/media/dx/Code/Data/taishan-data/data/comment_files", "-d /media/dx/Code/Data/taishan-data/data/comment_files")
+	flag.StringVar(&CommentPath, "d", "/media/dx/Code/Data/taishan-data/data", "-d /media/dx/Code/Data/taishan-data/data")
+	flag.Set("logtostderr", "true")
+	flag.Parse()
 	dbUrl := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4",
 		user,
 		pwd,
 		host,
 		port,
 		dbName)
-	flag.Set("logtostderr", "true")
-	flag.Parse()
 	glog.Info(dbUrl)
 
 	var DB *gorm.DB
@@ -39,7 +39,7 @@ func connectDB() *gorm.DB {
 	if DB, err = gorm.Open("mysql", dbUrl); err != nil {
 		glog.Fatal(err)
 	}
-
+	CommentPath = path2.Join(CommentPath, "comment_files")
 	if _, err = os.Open(CommentPath); os.IsNotExist(err) {
 		glog.Fatal(err)
 	}
@@ -48,6 +48,14 @@ func connectDB() *gorm.DB {
 
 	return DB
 }
+
+//1.找到所有评论
+//2.根据评论找视点
+//3.如果找不到,检查是否已经被替换,又错误则退出
+//4.根据评论找附件
+//5.找到后,修改路径
+//6.如果修改失败,检查是否已经修改过了,又错误则退出
+//7.修改评论的视点ID成文件ID
 
 func main() {
 	db := connectDB()
