@@ -22,7 +22,7 @@ func connectDB() *gorm.DB {
 	flag.StringVar(&user, "u", "root", "-u root")
 	flag.StringVar(&pwd, "p", "123", "-p 123")
 	flag.IntVar(&port, "P", 3306, "-P 3306")
-	flag.StringVar(&host, "h", "192.168.99.102", "-h localhost")
+	flag.StringVar(&host, "h", "localhost", "-h localhost")
 	flag.StringVar(&CommentPath, "d", "/media/dx/Code/Data/taishan-data/data", "-d /media/dx/Code/Data/taishan-data/data")
 	flag.Set("logtostderr", "true")
 	flag.Parse()
@@ -85,8 +85,8 @@ func main() {
 				//whether had alread been modified.
 				newFilePath := path2.Join(CommentPath, viewpoint.ProjectId, viewpoint.ProjectFileId)
 				if _, err := os.Open(newFilePath); err != nil && os.IsNotExist(err) {
-					glog.Infof(" %s was not found %d ,exit.", newFilePath, index+1)
-					return
+					glog.Infof(" %s was not found %d,continue.", newFilePath, index+1)
+					continue
 				} else {
 					//modirying in previous round
 					glog.Infof(" %s was  found %d", newFilePath, index+1)

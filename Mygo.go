@@ -3,6 +3,8 @@ package main
 import (
 	"MyGolang/Misc"
 	"bufio"
+	"crypto/sha1"
+	"encoding/hex"
 	"flag"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
@@ -28,13 +30,23 @@ const (
 var counterPool = make(map[string]time.Time)
 
 const rootpath = "/home/dx/GoWorkBench/src/dx/taishan/data/comment_files"
+const hextable = "0123456789abcdef"
 
 func main() {
 	flag.Set("logtostderr", "true")
 	flag.Parse()
+	strs := "20190101"
+	h := sha1.New()
+	h.Write([]byte(strs))
+	glog.Info(h.Sum(nil))
+	glog.Info(hex.EncodeToString(h.Sum(nil)))
 
-	glog.Infof("%5d/%5d",1111,2222)
-
+	res := make([]byte, len([]byte(h.Sum(nil)))*2)
+	for i, v := range h.Sum(nil) {
+		res[i*2] = hextable[v>>4]
+		res[i*2+1] = hextable[v&0x0f]
+	}
+	glog.Info(string(res))
 }
 
 func InputLoop() {
