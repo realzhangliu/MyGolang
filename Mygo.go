@@ -6,7 +6,10 @@ import (
 	"bufio"
 	"os"
 
+	"flag"
 	"reflect"
+
+	"github.com/golang/glog"
 )
 
 type Order struct {
@@ -20,9 +23,15 @@ type GG interface {
 func (order *Order) gg() string {
 	return "gg"
 }
+func init() {
+	flag.Set("log_dir", "./log")
+	flag.Set("alsologtostderr", "true")
+	flag.Parse()
+}
 func main() {
-	g1 := &Order{}
-	fmt.Println(g1.gg())
+
+	bts := []byte("a\nb\n")
+	glog.Info(string(bts))
 }
 func InputLoop() {
 	rd := bufio.NewReader(os.Stdin)
