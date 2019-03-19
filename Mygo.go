@@ -1,10 +1,7 @@
 package main
 
 import (
-	"MyGolang/Misc"
 	"bufio"
-	"crypto/sha1"
-	"encoding/hex"
 	"flag"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
@@ -12,7 +9,6 @@ import (
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
-	"math/rand"
 	"net"
 	"os"
 	"reflect"
@@ -35,18 +31,12 @@ const hextable = "0123456789abcdef"
 func main() {
 	flag.Set("logtostderr", "true")
 	flag.Parse()
-	strs := "20190101"
-	h := sha1.New()
-	h.Write([]byte(strs))
-	glog.Info(h.Sum(nil))
-	glog.Info(hex.EncodeToString(h.Sum(nil)))
-
-	res := make([]byte, len([]byte(h.Sum(nil)))*2)
-	for i, v := range h.Sum(nil) {
-		res[i*2] = hextable[v>>4]
-		res[i*2+1] = hextable[v&0x0f]
+	var none interface{}
+	name := "123 '123' \r dfdfd"
+	none = name
+	if v,ok:=none.(string);ok{
+		glog.Info(v)
 	}
-	glog.Info(string(res))
 }
 
 func InputLoop() {
@@ -73,26 +63,7 @@ func reflect_example() {
 	res := rvs[0].MapIndex(reflect.ValueOf("id")).String()
 	fmt.Println(res)
 }
-func algorithmStart(name string) {
 
-	var a []int
-	for i := 0; i < 100; i++ {
-		a = append(a, rand.Intn(100))
-	}
-	switch name {
-	case "QuickSort":
-		Misc.QuickSort(a, 0, len(a)-1)
-		fmt.Printf("Sorted array is :%v\n", a)
-
-	case "MergeSort":
-		Misc.MergeSort(a, 0, len(a)-1)
-		fmt.Printf("Sorted array is :%v\n", a)
-
-	default:
-		fmt.Println("Correct name was expected.")
-	}
-
-}
 func tcp_test() {
 	//server
 	go func() {

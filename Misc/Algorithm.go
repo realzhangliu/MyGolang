@@ -1,7 +1,31 @@
 package Misc
 
+import (
+	"fmt"
+	"math/rand"
+)
+
 var a chan string
 
+func algorithmStart(name string) {
+
+	var a []int
+	for i := 0; i < 100; i++ {
+		a = append(a, rand.Intn(100))
+	}
+	switch name {
+	case "QuickSort":
+		Misc.QuickSort(a, 0, len(a)-1)
+		fmt.Printf("Sorted array is :%v\n", a)
+
+	case "MergeSort":
+		Misc.MergeSort(a, 0, len(a)-1)
+		fmt.Printf("Sorted array is :%v\n", a)
+
+	default:
+		fmt.Println("Correct name was expected.")
+	}
+}
 func MergeSort(a []int, low, high int) {
 	if low < high {
 		mid := (low + high) / 2
