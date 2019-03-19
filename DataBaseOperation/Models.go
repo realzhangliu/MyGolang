@@ -4,6 +4,7 @@ import (
 	"dx/taishan/core/db"
 	"dx/taishan/modules/user/models"
 	"time"
+	"dx/taishan/core/rbac"
 )
 
 type FileStruct struct {
@@ -49,7 +50,7 @@ type ContainerMember struct {
 	Owner       models.User `json:"owner"`
 }
 
-var CMS []ContainerMember
+var containerMembers []ContainerMember
 
 type UserProfile struct {
 	db.Model
@@ -84,6 +85,9 @@ type User struct {
 	//Label       []UserLabel `form:"-" json:"label" gorm:"foreignkey:UserId"`
 
 }
+
+var user User
+
 type UserForProfiles struct {
 	//db.Model
 	Name string `form:"name" binding:"exists,alphanum,min=4,max=255" json:"name"`
@@ -154,3 +158,37 @@ type Container struct {
 }
 
 var containers []Container
+type ProjectMemberGroup struct {
+	db.Model
+	Name        string `json:"name" form:"name"`
+	Description string `json:"description" form:"description"`
+	// TODO: Owner
+	OwnerId        string          `json:"owner_id" form:"owner_id" gorm:"index"`
+	ProjectId      string          `json:"project_id" form:"project_id" gorm:"index"`
+	ProjectMembers []ProjectMember `gorm:"many2many:project_member_member_groups;ForeignKey:group_id;AssociationForeignKey:member_id"`
+	MemberIds      []string        `json:"-" form:"member_ids" gorm:"-"`
+}
+type MemberRole struct {
+	rbac.Role
+	ProjectId           string            `json:"project_id"`
+	Status              int               `json:"status"`
+	RoleType            int               `json:"role_type" db:"role_type"`
+	Permissions         []rbac.Permission `gorm:"many2many:member_role_permissions" json:"permissions"`
+	PermissionIds       []string          `form:"permission_ids" json:"permission_ids" gorm:"-"`
+	AddPermissionIds    []string          `form:"add_permission_ids" json:"add_permission_ids" gorm:"-"`
+	RemovePermissionIds []string          `form:"remove_permission_ids" json:"remove_permission_ids" gorm:"-"`
+	Members             []ProjectMember   `gorm:"many2many:project_member_member_roles"`
+}
+type ProjectMember struct {
+	db.Model
+	ProjectId           string               `json:"project_id" form:"project_id" gorm:"index"`
+	OwnerId             string               `json:"owner_id" form:"owner_id" gorm:"index"`
+	Owner               models.User          `json:"owner"`
+	Description         string               `json:"description" form:"description"`
+	Status              int                  `json:"status" form:"status"`
+	MemberType          int                  `json:"member_type" db:"member_type"`
+	ProjectMemberGroups []ProjectMemberGroup `json:"project_member_groups" gorm:"many2many:project_member_member_groups;ForeignKey:member_id;AssociationForeignKey:group_id"`
+	Roles               []MemberRole         `json:"roles" gorm:"many2many:project_member_member_roles"`
+}
+var projectMember ProjectMember
+var projectMembers []ProjectMember

@@ -2,36 +2,38 @@ package main
 
 import (
 	"fmt"
+	"github.com/golang/glog"
 
 	"bufio"
 	"os"
 
 	"flag"
 	"reflect"
-
-	"github.com/golang/glog"
+	"time"
 )
 
-type Order struct {
-	OrdId      int
-	customerId int
-}
-type GG interface {
-	gg() string
-}
+const (
+	file1 = "6.9MB.jpg"
+	file2 = "26MB.jpg"
+	file3 = "1MB.gif"
+	file4 = "3.7MB.tga"
+	file5 = "13.4MB.pdf"
+)
 
-func (order *Order) gg() string {
-	return "gg"
-}
-func init() {
-	flag.Set("log_dir", "./log")
-	flag.Set("alsologtostderr", "true")
-	flag.Parse()
-}
+var counterPool = make(map[string]time.Time)
+
+const rootpath = "/home/dx/GoWorkBench/src/dx/taishan/data/comment_files"
+const hextable = "0123456789abcdef"
+
 func main() {
-
-	bts := []byte("a\nb\n")
-	glog.Info(string(bts))
+	flag.Set("logtostderr", "true")
+	flag.Parse()
+	var none interface{}
+	name := "123 '123' \r dfdfd"
+	none = name
+	if v,ok:=none.(string);ok{
+		glog.Info(v)
+	}
 }
 func InputLoop() {
 	rd := bufio.NewReader(os.Stdin)
@@ -50,11 +52,9 @@ func reflect_example() {
 		return map[string]string{"id": "id1"}
 	}
 	var v reflect.Value
-	var inf interface{}
 
-	inf = method
-	v = reflect.ValueOf(inf)
-	vs := []reflect.Value{reflect.ValueOf(interface{}("myStrings"))}
+	v = reflect.ValueOf(method)
+	vs := []reflect.Value{reflect.ValueOf("myStrings")}
 	rvs := v.Call(vs)
 	res := rvs[0].MapIndex(reflect.ValueOf("id")).String()
 	fmt.Println(res)
