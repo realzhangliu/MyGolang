@@ -25,13 +25,13 @@ var counterPool = make(map[string]time.Time)
 const rootpath = "/home/dx/GoWorkBench/src/dx/taishan/data/comment_files"
 const hextable = "0123456789abcdef"
 
-func main() {
+func Run() {
 	flag.Set("logtostderr", "true")
 	flag.Parse()
 	var none interface{}
 	name := "123 '123' \r dfdfd"
 	none = name
-	if v,ok:=none.(string);ok{
+	if v, ok := none.(string); ok {
 		glog.Info(v)
 	}
 }
